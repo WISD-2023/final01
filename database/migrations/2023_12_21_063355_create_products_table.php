@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('market_id');
+            $table->unsignedBigInteger('type_id');
+            $table->string('name');
+            $table->text('description');
+            $table->integer('price');
+            $table->integer('stock');
+            $table->string('status');
+            $table->string('pic')->nullable();;
             $table->timestamps();
         });
     }
