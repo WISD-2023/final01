@@ -9,6 +9,13 @@ class Seller extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'status',
+        'rating',
+        'startdate',
+    ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

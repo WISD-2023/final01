@@ -9,6 +9,11 @@ class Market extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     public function seller(){
         return $this->belongsTo(Seller::class);
     }
