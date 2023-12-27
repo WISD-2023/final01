@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Seller;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,9 @@ class MarketFactory extends Factory
     {
         return [
             //
+            'name' => $this->faker->company,
+            'description' => $this->faker->paragraph,
+
         ];
     }
 }

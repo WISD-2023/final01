@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('seller_id');
             $table->string('name');
             $table->text('description');
             $table->timestamps();

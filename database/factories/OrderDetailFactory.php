@@ -18,6 +18,7 @@ class OrderDetailFactory extends Factory
     {
         return [
             //
+            'quantity' => mt_rand(1,10),
         ];
     }
 }
