@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('member_id');
-            $table->unsignedBigInteger('market_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('type');
             $table->string('status');
             $table->float('rating');
-            $table->dateTime('startdate');
             $table->timestamps();
         });
     }

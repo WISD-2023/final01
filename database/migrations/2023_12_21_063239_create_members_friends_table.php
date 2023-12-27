@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('members_friends', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('member_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('friend_id');
             $table->date('date');
             $table->timestamps();
         });
