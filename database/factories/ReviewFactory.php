@@ -18,6 +18,8 @@ class ReviewFactory extends Factory
     {
         return [
             //
+            'content' => fake()->paragraph,
+            'rating' => fake()->numberBetween(1, 5),
         ];
     }
 }
