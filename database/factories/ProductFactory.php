@@ -18,6 +18,12 @@ class ProductFactory extends Factory
     {
         return [
             //
+            'name' => fake()->word,
+            'description' => fake()->sentence,
+            'price' => fake()->numberBetween(10, 5000),
+            'stock' => fake()->numberBetween(0, 10),
+            'status' => fake()->randomElement(['進貨中', '已入庫']),
+            'pic' => 'https://hips.hearstapps.com/hmg-prod/images/new-project-2-1594617464.jpg?crop=0.505xw:1.00xh;0.0228xw,0&resize=640:*',
         ];
     }
 }

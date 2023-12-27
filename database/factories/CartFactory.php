@@ -18,6 +18,7 @@ class CartFactory extends Factory
     {
         return [
             //
+            'quantity' => $this->faker->numberBetween(1, 3),
         ];
     }
 }
