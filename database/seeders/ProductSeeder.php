@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
         //
         // 建立 10 筆商品資料
         Market::all()->each(function ($market) {
-            Product::factory(5)->create([
+            Product::factory(10)->create([
                 'market_id' => function () use ($market) {
                     return $market->id;
                 },

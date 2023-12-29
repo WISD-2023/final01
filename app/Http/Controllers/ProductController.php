@@ -14,6 +14,12 @@ class ProductController extends Controller
     public function index()
     {
         //
+        // 獲取所有商品資料，每頁顯示12個
+        $products = Product::paginate(12);
+
+        // 將商品資料和當前頁碼傳遞到視圖中
+        return view('products.index', compact('products'));
+        
     }
 
     /**
