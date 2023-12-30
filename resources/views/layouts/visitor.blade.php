@@ -18,7 +18,26 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- 購物車按鈕和訂單狀態按鈕 -->
+            <div class="flex items-center space-x-4 mr-auto ml-32">
+            <!-- 購物車按鈕 -->
+            <div>
+                <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')"
+                            class="hover:underline">
+                    {{ __('購物車') }}
+                </x-nav-link>
+            </div>
+
+            <!-- 訂單狀態按鈕 -->
+            <div>
+                <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')"
+                            class="hover:underline">
+                    {{ __('訂單狀態') }}
+                </x-nav-link>
+            </div>
+        </div>
+
+           <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -37,20 +56,26 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('個人資料') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('登出') }}
+                        @auth
+                            <!-- Add the new dropdown link for "個人資訊" with route to dashboard -->
+                            <x-dropdown-link :href="route('dashboard')">
+                                {{ __('個人資訊') }}
                             </x-dropdown-link>
-                        </form>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')"
+                                                onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                    {{ __('登出') }}
+                                </x-dropdown-link>
+                            </form>
+                        @else
+                            <x-dropdown-link :href="route('login')">
+                                {{ __('登入') }}
+                            </x-dropdown-link>
+                        @endauth
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -83,13 +108,12 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 @else
                     <div class="font-medium text-base text-gray-800">未登入</div>
-                    <div class="font-medium text-sm text-gray-500">請登入以查看更多資訊</div>
                 @endauth
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('個人資訊') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

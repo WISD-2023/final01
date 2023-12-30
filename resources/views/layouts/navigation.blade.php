@@ -34,6 +34,7 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('個人資料') }}
                         </x-dropdown-link>

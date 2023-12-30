@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -14,6 +16,17 @@ class CartController extends Controller
     public function index()
     {
         //
+        // 取得當前使用者的 ID
+        $userId = Auth::id();
+
+        // 使用當前使用者的 ID 篩選購物車資料
+        $cartItems = Cart::where('user_id', $userId)->get();
+
+        // 如果需要的話，你也可以取得相應的商品資料
+        $productIds = $cartItems->pluck('product_id');
+        $products = Product::whereIn('id', $productIds)->get();
+
+        return view('cart.index', compact('cartItems', 'products'));
     }
 
     /**
