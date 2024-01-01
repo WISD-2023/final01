@@ -9,11 +9,11 @@
         <div class="grid grid-cols-2 gap-4">
             <!-- 商品清單 -->
             <div class="col-span-1">
-                @foreach($products as $product)
+                @forelse($products as $product)
                     <div class="mb-4 p-4 border rounded-lg flex items-center">
                         <!-- 加入購物車按鈕 -->
                         <label for="buy" class="mr-4">
-                        <input type="checkbox" name="buy" id="buy{{ $loop->iteration }}" class="mr-1" data-name="{{ $product->name }}" data-price="{{ $product->price }}"> 加入購物車
+                            <input type="checkbox" name="buy" id="buy{{ $loop->iteration }}" class="mr-1" data-name="{{ $product->name }}" data-price="{{ $product->price }}"> 加入購物車
                         </label>
 
                         <!-- 照片區域 -->
@@ -39,7 +39,9 @@
                             </label>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <p>購物車是空的。</p>
+                @endforelse
             </div>
 
             <!-- 訂單明細 -->

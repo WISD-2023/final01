@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
 {
@@ -44,6 +46,15 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+        try {
+            // 獲取單一商品的詳細資訊
+            $productDetails = Product::findOrFail($product->id);
+    
+            // 將單一商品的詳細資訊傳遞到視圖中
+            return view('products.product', compact('productDetails'));
+        } catch (ModelNotFoundException $e) {
+            abort(404); // 商品不存在，回傳 404 頁面
+        }
     }
 
     /**

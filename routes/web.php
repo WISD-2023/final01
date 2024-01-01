@@ -31,13 +31,17 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
+Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
 });
 
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
+
 Route::get('/order', function () {
-    return view('order.order');
+    return view('order.order', compact('products', 'totalAmount'));
 });
 
 Route::get('/dashboard', function () {

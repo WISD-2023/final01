@@ -6,6 +6,8 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -27,6 +29,8 @@ class CartController extends Controller
         $products = Product::whereIn('id', $productIds)->get();
 
         return view('cart.index', compact('cartItems', 'products'));
+
+        
     }
 
     /**
@@ -40,9 +44,27 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCartRequest $request)
+    public function store(Request $request)
     {
-        //
+        $userId = Auth::id();
+        $productId = $request->input('product_id');
+    
+        // 檢查購物車是否已存在相同商品，如果存在則增加數量，否則新增購物車項目
+        $existingCartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
+    
+        if ($existingCartItem) {
+            $existingCartItem->update([
+                'quantity' => $existingCartItem->quantity + 1,
+            ]);
+        } else {
+            Cart::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'quantity' => 1,
+            ]);
+        }
+    
+        return redirect()->route('cart.index')->with('success', '商品已成功加入購物車');
     }
 
     /**

@@ -10,6 +10,8 @@ class Cart extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id', // 這裡要包含 user_id
+        'product_id',
         'quantity',
     ];
 
@@ -18,7 +20,7 @@ class Cart extends Model
     }
 
     public function product(){
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
 
     public function orders(){
