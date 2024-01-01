@@ -9,31 +9,31 @@
         <div class="grid grid-cols-2 gap-4">
             <!-- 商品清單 -->
             <div class="col-span-1">
-                @forelse($products as $product)
+                @forelse($cartItems as $cartItem)
                     <div class="mb-4 p-4 border rounded-lg flex items-center">
-                        <!-- 加入購物車按鈕 -->
-                        <label for="buy" class="mr-4">
-                            <input type="checkbox" name="buy" id="buy{{ $loop->iteration }}" class="mr-1" data-name="{{ $product->name }}" data-price="{{ $product->price }}"> 加入購物車
+                        <!-- 這裡是加入購物車按鈕 -->
+                        <label for="buy{{ $loop->iteration }}" class="mr-4">
+                            <input type="checkbox" name="buy" id="buy{{ $loop->iteration }}" class="mr-1" data-id="{{ $cartItem->product->id }}" data-name="{{ $cartItem->product->name }}" data-price="{{ $cartItem->product->price }}"> 加入購物車
                         </label>
 
-                        <!-- 照片區域 -->
+                        <!-- 商品照片區域 -->
                         <div class="flex-shrink-0">
-                            <img src="{{ $product->pic }}" alt="{{ $product->name }}" class="w-32 h-40 object-cover rounded-md">
+                            <img src="{{ $cartItem->product->pic }}" alt="{{ $cartItem->product->name }}" class="w-32 h-40 object-cover rounded-md">
                         </div>
 
                         <!-- 商品資訊區域 -->
                         <div class="flex flex-col justify-between ml-4">
                             <div>
-                                <h2 class="text-lg font-semibold">{{ $product->name }}</h2>
-                                <p class="text-sm text-gray-500">{{ $product->status }}</p>
-                                <p class="text-lg font-bold text-green-500">${{ $product->price }}</p>
+                                <h2 class="text-lg font-semibold">{{ $cartItem->product->name }}</h2>
+                                <p class="text-sm text-gray-500">{{ $cartItem->product->status }}</p>
+                                <p class="text-lg font-bold text-green-500">${{ $cartItem->product->price }}</p>
                             </div>
 
-                            <!-- 購買數量下拉式選單 -->
+                            <!-- 商品數量下拉式選單 -->
                             <label for="quantity" class="block mt-2 text-sm text-gray-600">
                                 <select name="quantity" id="quantity" class="w-16 p-2 border rounded-md">
                                     @for($i = 1; $i <= 10; $i++)
-                                        <option value="{{ $i }}" @if($product->pivot && $i == $product->pivot->quantity) selected @endif>{{ $i }}</option>
+                                        <option value="{{ $i }}" @if($i == $cartItem->quantity) selected @endif>{{ $i }}</option>
                                     @endfor
                                 </select>
                             </label>
@@ -56,8 +56,8 @@
                             <th class="border border-gray-300 p-2">小計</th>
                         </tr>
                     </thead>
-                    <tbody id="orderDetails"> <!-- 將訂單明細的<tbody>標籤加上id="orderDetails" -->
-                        <!-- 此處不需顯示預先購買的商品項目 -->
+                    <tbody id="orderDetails">
+                        <!-- 在這裡顯示購物車中已選擇的商品 -->
                     </tbody>
                 </table>
 
@@ -68,7 +68,8 @@
                 </div>
 
                 <!-- 購買按鈕 -->
-                <button id="purchaseButton" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md">購買</button>
+                <a href="{{ route('order.show') }}" id="purchaseButton" class="btn btn-primary">購買</a>
             </div>
+        </div>
     </div>
 @endsection

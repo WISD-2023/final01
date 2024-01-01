@@ -1,40 +1,28 @@
 @extends('layouts.app')
 
-@section('title', '社交購物商場')
+@section('title', '社交購物商場 - 訂單確認')
 
 @section('content')
-    <div class="container mx-auto py-8">
-        <h1 class="text-3xl font-semibold mb-4">訂單確認</h1>
+    <div class="container mx-auto my-8">
+        <h2 class="text-2xl font-bold mb-4">訂單明細</h2>
 
-        <!-- 訂單明細 -->
-        <div class="mb-4 p-4 border rounded-lg">
-            <h2 class="text-2xl font-semibold mb-4">訂單明細</h2>
-            <table class="min-w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr>
-                        <th class="border border-gray-300 p-2">商品名稱</th>
-                        <th class="border border-gray-300 p-2">商品價格</th>
-                        <th class="border border-gray-300 p-2">數量</th>
-                        <th class="border border-gray-300 p-2">小計</th>
-                    </tr>
-                </thead>
-                <tbody id="orderDetails">
-                @foreach($cartItems as $cartItem)
-                    <tr>
-                        <td class="border border-gray-300 p-2">{{ $cartItem->product->name }}</td>
-                        <td class="border border-gray-300 p-2">${{ $cartItem->product->price }}</td>
-                        <td class="border border-gray-300 p-2">{{ $cartItem->quantity }}</td>
-                        <td class="border border-gray-300 p-2">${{ $cartItem->product->price * $cartItem->quantity }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+        @foreach($cartItems as $cartItem)
+            <div class="mb-4">
+                <h4 class="text-xl font-bold">{{ $cartItem->product->name }}</h4>
+                <p>數量: {{ $cartItem->quantity }}</p>
+                <p>單價: ${{ $cartItem->product->price }}</p>
+                <p>小計: ${{ $cartItem->quantity * $cartItem->product->price }}</p>
+            </div>
+            <hr class="my-2">
+        @endforeach
+
+        <div class="mt-4">
+            <h3 class="text-xl font-bold">總計: ${{ $totalPrice }}</h3>
         </div>
 
-        <!-- 訂單總額等相關內容 -->
-        
-        <!-- 購買按鈕 -->
-        <!-- 此處可以添加其他相關按鈕或內容 -->
-
+        <div class="mt-8">
+            <!-- 在這裡加入訂購按鈕 -->
+            <a href="{{ route('order.confirm') }}" class="btn btn-primary">確認訂單</a>
+        </div>
     </div>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Cart;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 
@@ -62,5 +63,16 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function showOrderPage()
+    {
+        $cartItems = Cart::where('user_id', auth()->id())->get();
+
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+
+        return view('order.order', compact('cartItems', 'totalPrice'));
     }
 }

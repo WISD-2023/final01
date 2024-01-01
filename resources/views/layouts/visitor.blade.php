@@ -37,26 +37,44 @@
             </div>
         </div>
 
-           <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            @auth
-                                <div>{{ Auth::user()->name }}</div>
-                            @else
+            <!-- 登入註冊下拉選單 -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
+                @guest
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                                 <div>未登入</div>
-                            @endauth
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
 
-                    <x-slot name="content">
-                        @auth
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('register')">
+                                {{ __('註冊') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('login')">
+                                {{ __('登入') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+                @else
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                <div>{{ Auth::user()->name }}</div>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
                             <!-- Add the new dropdown link for "個人資訊" with route to dashboard -->
                             <x-dropdown-link :href="route('dashboard')">
                                 {{ __('個人資訊') }}
@@ -71,13 +89,9 @@
                                     {{ __('登出') }}
                                 </x-dropdown-link>
                             </form>
-                        @else
-                            <x-dropdown-link :href="route('login')">
-                                {{ __('登入') }}
-                            </x-dropdown-link>
-                        @endauth
-                    </x-slot>
-                </x-dropdown>
+                        </x-slot>
+                    </x-dropdown>
+                @endguest
             </div>
 
             <!-- Hamburger -->

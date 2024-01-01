@@ -29,8 +29,6 @@ class CartController extends Controller
         $products = Product::whereIn('id', $productIds)->get();
 
         return view('cart.index', compact('cartItems', 'products'));
-
-        
     }
 
     /**
@@ -97,5 +95,18 @@ class CartController extends Controller
     public function destroy(Cart $cart)
     {
         //
+    }
+
+    public function showOrderPage()
+    {
+        // 假設你的購物車項目從資料庫中獲取，請根據實際情況修改這裡的程式碼
+        $cartItems = Cart::where('user_id', auth()->id())->get();
+    
+        // 計算總計，這裡僅為示範，實際情況應根據你的邏輯計算
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
+    
+        return view('order.order', compact('cartItems', 'totalPrice'));
     }
 }

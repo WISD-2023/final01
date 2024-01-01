@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,15 +24,14 @@ Route::get('/', function () {
 });
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+
+Route::get('/order', [OrderController::class, 'showOrderPage'])->name('order.show');
+Route::get('/order/confirm', [OrderController::class, 'confirmOrder'])->name('order.confirm');
+Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
 
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料
@@ -39,10 +39,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
-
-Route::get('/order', function () {
-    return view('order.order', compact('products', 'totalAmount'));
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

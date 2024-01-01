@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleCheckboxChange(checkbox) {
+        const id = checkbox.getAttribute('data-id');
         const name = checkbox.getAttribute('data-name');
         const price = parseFloat(checkbox.getAttribute('data-price'));
         const quantity = parseInt(checkbox.closest('.flex').querySelector('select[name="quantity"]').value);
@@ -48,8 +49,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 購買按鈕事件
     document.getElementById('purchaseButton').addEventListener('click', function () {
+        // 將購買數據轉為 JSON 字符串（這取決於你的後端處理方式）
+        const selectedProducts = [];
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                const productId = checkbox.getAttribute('data-id');
+                const quantity = parseInt(checkbox.closest('.flex').querySelector('select[name="quantity"]').value);
+                selectedProducts.push({ productId, quantity });
+            }
+        });
+        const jsonData = JSON.stringify(selectedProducts);
+
+        // 在這裡可以使用 AJAX 或其他方式將購買數據發送到後端
+        // 然後根據後端的處理結果執行相應操作，例如跳轉頁面
+
+        // 暫時以警告框顯示
         alert('購買成功！');
+
         // 導向到訂單頁面
-        window.location.href = '/order';
+        window.location.href = '/order/create';
     });
 });
