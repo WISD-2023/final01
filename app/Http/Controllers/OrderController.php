@@ -20,7 +20,7 @@ class OrderController extends Controller
         // 獲取當前使用者的所有訂單
         $userId = auth()->id();
         $orders = Order::where('user_id', $userId)->get();
-
+    
         // 傳遞訂單數據到訂單頁面
         return view('order.order', ['orders' => $orders]);
     }
@@ -114,5 +114,19 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function pay(Order $order)
+    {
+        // 假設你的 orders 資料表中有一個欄位叫做 is_paid
+        $order->update(['is_paid' => '已付款']);
+
+        return redirect()->route('order'); // 重定向回訂單頁面
+    }
+
+    public function showOrderDetail(Order $order)
+    {
+        // 傳遞訂單數據到訂單明細頁面
+        return view('order.orderdetail', ['order' => $order]);
     }
 }

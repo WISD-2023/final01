@@ -33,6 +33,9 @@ Route::get('/order', [OrderController::class, 'index'])->name('order');
 
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 
+Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay');
+Route::get('/orderdetail/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail');
+
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
