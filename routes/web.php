@@ -36,6 +36,9 @@ Route::post('/order/store', [OrderController::class, 'store'])->name('order.stor
 Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay');
 Route::get('/orderdetail/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail');
 
+Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
+Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
+
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
