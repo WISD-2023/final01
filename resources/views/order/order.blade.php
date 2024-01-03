@@ -3,26 +3,28 @@
 @section('title', '社交購物商場 - 訂單')
 
 @section('content')
-    <div class="container mx-auto my-8">
-        <h1 class="text-3xl font-semibold mb-4">訂單確認</h1>
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-semibold mb-4">訂單</h1>
 
-        @if(isset($orders) && $orders->count() > 0)
-            <table class="w-full border">
-                <thead>
+        @if($orders->count() > 0)
+            <table class="min-w-full border rounded-lg overflow-hidden">
+                <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th class="border">訂單編號</th>
-                        <th class="border">付款狀態</th>
-                        <th class="border">收貨人姓名</th>
-                        <!-- 其他需要顯示的訂單資訊，根據實際情況添加 -->
+                        <th class="py-2 px-4">訂單流水號</th>
+                        <th class="py-2 px-4">支付方式</th>
+                        <th class="py-2 px-4">是否支付</th>
+                        <th class="py-2 px-4">收貨人姓名</th>
+                        <!-- 添加其他你需要顯示的訂單信息 -->
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-gray-200">
                     @foreach($orders as $order)
                         <tr>
-                            <td class="border">{{ $order->id }}</td>
-                            <td class="border">{{ $order->is_paid }}</td>
-                            <td class="border">{{ $order->receiver_name }}</td>
-                            <!-- 其他需要顯示的訂單資訊，根據實際情況添加 -->
+                            <td class="py-2 px-4">{{ $order->id }}</td>
+                            <td class="py-2 px-4">{{ $order->payment_method }}</td>
+                            <td class="py-2 px-4">{{ $order->is_paid }}</td>
+                            <td class="py-2 px-4">{{ $order->receiver_name }}</td>
+                            <!-- 添加其他你需要顯示的訂單信息 -->
                         </tr>
                     @endforeach
                 </tbody>
