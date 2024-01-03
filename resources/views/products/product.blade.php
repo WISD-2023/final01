@@ -41,7 +41,19 @@
         </div>
 
         <hr class="my-6">
+         <!-- 顯示商品評論 -->
+         <div>
+            <h3 class="text-2xl font-bold mb-4">商品評論</h3>
 
-        <!-- 如果需要顯示相關商品，可以在這裡處理 -->
+            @forelse($productDetails->reviews as $review)
+                <div class="mb-4">
+                    <p class="text-lg font-semibold">{{ $review->user->name }}</p>
+                    <p class="mb-2">{{ $review->content }}</p>
+                    <p class="text-gray-500">評分: {{ $review->rating }}</p>
+                </div>
+            @empty
+                <p>目前尚無評論。</p>
+            @endforelse
+        </div>
     </div>
 @endsection
