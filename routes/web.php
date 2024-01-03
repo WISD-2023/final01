@@ -29,7 +29,7 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
 
-Route::get('/order', [OrderController::class, 'index'])->name('order');
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 

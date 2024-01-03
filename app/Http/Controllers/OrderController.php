@@ -114,7 +114,13 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        // 確認使用者只能刪除自己的訂單
+        if ($order->user_id === auth()->id()) {
+            $order->delete();
+            return redirect()->route('order.index')->with('success', '訂單已成功刪除');
+        } else {
+            return redirect()->route('order.index')->with('error', '您無權刪除此訂單');
+        }
     }
 
     public function pay(Order $order)
