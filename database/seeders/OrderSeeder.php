@@ -17,17 +17,11 @@ class OrderSeeder extends Seeder
     {
         //
         Cart::all()->take(3)->each(function($cart){
-            Order::factory(1)->create([
-                'product_id' => $cart->product_id
-            ]);
+            Order::factory(1)->create();
         });
 
         Product::all()->take(2)->each(function($product){
-            Order::factory(1)->create([
-                'product_id' => function () {
-                    return Product::inRandomOrder()->first()->id;
-                }
-            ]);
+            Order::factory(1)->create();
         });
 
         /*

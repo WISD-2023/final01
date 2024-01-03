@@ -29,9 +29,9 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
 
-Route::get('/order', [OrderController::class, 'showOrderPage'])->name('order.show');
-Route::get('/order/confirm', [OrderController::class, 'confirmOrder'])->name('order.confirm');
-Route::post('/order/place', [OrderController::class, 'placeOrder'])->name('order.place');
+Route::get('/order', [OrderController::class, 'index'])->name('order');
+
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料

@@ -22,6 +22,9 @@ class OrderDetailSeeder extends Seeder
             'order_id' => function () use ($orderIds) {
                 return \Illuminate\Support\Arr::random($orderIds);
             },
+            'product_id' => function () {
+                return Product::inRandomOrder()->first()->id;
+            }
         ]);
     }
 }
