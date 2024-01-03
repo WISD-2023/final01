@@ -55,10 +55,10 @@
                     <div class="mb-4">
                         <label for="paymentMethod" class="block text-sm font-medium text-gray-600">支付方式</label>
                         <select name="paymentMethod" id="paymentMethod" class="w-full p-2 border rounded-md">
-                            <option value="cashOnDelivery">貨到府款</option>
-                            <option value="onlinePayment">線上支付</option>
-                            <option value="bankTransfer">銀行轉帳</option>
-                            <option value="creditCard">信用卡</option>
+                            <option value="貨到府款">貨到府款</option>
+                            <option value="線上支付">線上支付</option>
+                            <option value="銀行轉帳">銀行轉帳</option>
+                            <option value="信用卡">信用卡</option>
                         </select>
                     </div>
 

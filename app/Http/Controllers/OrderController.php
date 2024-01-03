@@ -18,6 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         //
+        return view('order.order');
     }
 
     /**
@@ -43,17 +44,25 @@ class OrderController extends Controller
             $order->is_paid = "未付款";
             $order->payment_method = $request->paymentMethod;
             $order->receiver_name = $request->receiverName;
+
+            // 獲取目前使用者的購物車ID
+            $userId = auth()->id();
+            $cartId = Cart::where('user_id', $userId)->value('id');
+            
+            // 將購物車ID存入訂單
+            $order->cart_id = $cartId;
+
             // 其他收貨人資訊的處理，根據實際情況添加
             $order->save();
 
             // 獲取被勾選的商品ID陣列
             $selectedProducts = $request->input('buy', []);
+            $quantities = $request->input('quantity', []);
 
             // 將選定的商品建立到訂單明細
-            foreach ($selectedProducts as $productId) {
-                $quantityKey = 'quantity_' . $productId;
-                $quantity = $request->input($quantityKey, 1); // 假設沒有指定數量就預設為1
-
+            foreach ($selectedProducts as $key => $productId) {
+                $quantity = $quantities[$key] ?? 1; // 使用索引對應取得商品數量
+            
                 // 在 order_details 資料表中新增訂單明細
                 $orderDetail = new OrderDetail();
                 $orderDetail->order_id = $order->id;
@@ -61,7 +70,7 @@ class OrderController extends Controller
                 $orderDetail->quantity = $quantity;
                 // 其他訂單明細資訊的處理，根據實際情況添加
                 $orderDetail->save();
-
+            
                 // 清空購物車中該商品
                 $userId = auth()->id(); // 假設使用者已經登入，可以獲取使用者ID
                 Cart::where('user_id', $userId)->where('product_id', $productId)->delete();

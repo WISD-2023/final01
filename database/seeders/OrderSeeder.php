@@ -16,12 +16,10 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         //
-        Cart::all()->take(3)->each(function($cart){
-            Order::factory(1)->create();
-        });
-
-        Product::all()->take(2)->each(function($product){
-            Order::factory(1)->create();
+        Cart::all()->take(5)->each(function($cart){
+            Order::factory(1)->create([
+                'cart_id' => $cart->id,
+            ]);
         });
 
         /*
