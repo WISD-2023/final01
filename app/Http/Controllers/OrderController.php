@@ -22,7 +22,7 @@ class OrderController extends Controller
         $orders = Order::where('user_id', $userId)->get();
     
         // 傳遞訂單數據到訂單頁面
-        return view('order.order', ['orders' => $orders]);
+        return view('order.order', compact('orders'));
     }
 
     /**
@@ -72,15 +72,17 @@ class OrderController extends Controller
                 $orderDetail->save();
             }
     
-            // 清空購物車中的資料
-            Cart::where('user_id', $userId)->delete();
+            // 清空購物車中屬於被勾選商品的項目
+            Cart::where('user_id', $userId)
+            ->whereIn('product_id', $selectedProducts)
+            ->delete();
     
             // 提交資料庫交易
             DB::commit();
     
             // 其他相關邏輯，例如發送確認郵件等...
     
-            return redirect()->route('order'); // 假設有一個訂單成功頁面的路由
+            return redirect()->route('order.index')->with('success', '訂單已成功刪除');
         } catch (\Exception $e) {
             // 如果有任何錯誤發生，回滾資料庫交易
             DB::rollBack();
@@ -128,7 +130,7 @@ class OrderController extends Controller
         // 假設你的 orders 資料表中有一個欄位叫做 is_paid
         $order->update(['is_paid' => '已付款']);
 
-        return redirect()->route('order'); // 重定向回訂單頁面
+        return redirect()->route('order.index'); // 重定向回訂單頁面
     }
 
     public function showOrderDetail(Order $order)

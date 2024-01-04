@@ -17,6 +17,16 @@ class Order extends Model
         'status',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        // 在刪除訂單之前，同時刪除相應的訂單明細
+        static::deleting(function ($order) {
+            $order->orderDetails()->delete();
+        });
+    }
+
     public function product(){
         return $this->belongsTo(Product::class);
     }

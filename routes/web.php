@@ -31,7 +31,7 @@ Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store')
 
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay');
 Route::get('/orderdetail/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail');
