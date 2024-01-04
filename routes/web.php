@@ -38,6 +38,7 @@ Route::get('/orderdetail/{order}', [OrderController::class, 'showOrderDetail'])-
 
 Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
 Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
+Route::put('/order/{order}', [OrderController::class, 'update'])->name('order.update');
 
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料

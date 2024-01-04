@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use Illuminate\Http\Request;
@@ -99,8 +100,14 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
-        return view('order.order-edit', ['order' => $order]);
+        // 取得此訂單的所有商品ID和數量
+        $orderDetails = $order->orderDetails;
+    
+        // 取得商品資料
+        $products = Product::whereIn('id', $orderDetails->pluck('product_id')->toArray())->get();
+    
+        // 傳遞商品資料和訂單資料到視圖
+        return view('order.order-edit', compact('order', 'products', 'orderDetails'));
     }
 
     /**
@@ -108,7 +115,43 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        try {
+            // 開啟資料庫交易
+            DB::beginTransaction();
+
+            // 更新訂單資訊
+            $order->update([
+                'payment_method' => $request->input('paymentMethod'),
+                'is_paid' => $request->input('isPaid'),
+                'receiver_name' => $request->input('receiverName'),
+                // 其他需要更新的欄位...
+            ]);
+
+            // 更新訂單明細中的商品數量
+            foreach ($order->orderDetails as $orderDetail) {
+                $productId = $orderDetail->product_id;
+                $quantity = $request->input("quantity.$productId", 1); // 如果沒有該商品的新數量，預設為 1
+
+                $orderDetail->update([
+                    'quantity' => $quantity,
+                    // 其他需要更新的訂單明細欄位...
+                ]);
+            }
+
+            // 其他需要更新的邏輯...
+
+            // 提交資料庫交易
+            DB::commit();
+
+            return redirect()->route('order.index')->with('success', '訂單已成功修改');
+        } catch (\Exception $e) {
+            // 如果有任何錯誤發生，回滾資料庫交易
+            DB::rollBack();
+
+            // 處理錯誤，你可以根據實際情況進行適當的處理
+            dd($e);
+            return back()->with('error', '訂單修改失敗：' . $e->getMessage());
+        }
     }
 
     /**
