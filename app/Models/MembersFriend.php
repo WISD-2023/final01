@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class MembersFriend extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
+        'user_id',
+        'friend_id',
         'date',
     ];
 

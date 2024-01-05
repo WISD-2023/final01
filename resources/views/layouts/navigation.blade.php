@@ -34,9 +34,13 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        
+
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('個人資料') }}
+                            {{ __('個人  資料') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('friend.index')">
+                            {{ __('好友') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -44,7 +48,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                             onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('登出') }}
                             </x-dropdown-link>
@@ -90,7 +94,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                                           onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

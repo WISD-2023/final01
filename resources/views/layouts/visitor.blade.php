@@ -20,22 +20,22 @@
 
             <!-- 購物車按鈕和訂單狀態按鈕 -->
             <div class="flex items-center space-x-4 mr-auto ml-32">
-            <!-- 購物車按鈕 -->
-            <div>
-                <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')"
-                            class="hover:underline">
-                    {{ __('購物車') }}
-                </x-nav-link>
-            </div>
+                <!-- 購物車按鈕 -->
+                <div>
+                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')"
+                                class="hover:underline">
+                        {{ __('購物車') }}
+                    </x-nav-link>
+                </div>
 
-            <!-- 訂單狀態按鈕 -->
-            <div>
-                <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')"
-                            class="hover:underline">
-                    {{ __('訂單狀態') }}
-                </x-nav-link>
+                <!-- 訂單狀態按鈕 -->
+                <div>
+                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')"
+                                class="hover:underline">
+                        {{ __('訂單狀態') }}
+                    </x-nav-link>
+                </div>
             </div>
-        </div>
 
             <!-- 登入註冊下拉選單 -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
@@ -80,11 +80,15 @@
                                 {{ __('個人資訊') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link :href="route('friend.index')">
+                                {{ __('好友') }}
+                            </x-dropdown-link>
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
-                                                onclick="event.preventDefault();
+                                                 onclick="event.preventDefault();
                                                             this.closest('form').submit();">
                                     {{ __('登出') }}
                                 </x-dropdown-link>
@@ -135,7 +139,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                                           onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
