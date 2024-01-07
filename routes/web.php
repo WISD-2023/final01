@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MembersFriendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\FriendController;
+// use App\Http\Controllers\FriendController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,10 +43,13 @@ Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay');
 Route::get('/orderdetail/show/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['web', 'auth'])->group(function () {
     // 使用新的 MemberController 來更新個人資料
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
+    Route::resource('friend', MembersFriendController::class)->except(['create', 'store']);
+    Route::post('/friend', [MembersFriendController::class, 'store'])->name('friend.store'); // 確保這行是 POST 方法
 });
+
 
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
 
