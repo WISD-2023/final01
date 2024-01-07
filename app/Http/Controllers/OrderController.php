@@ -105,8 +105,8 @@ class OrderController extends Controller
     
         // 取得商品資料
         $products = Product::whereIn('id', $orderDetails->pluck('product_id')->toArray())->get();
-    
-        // 傳遞商品資料和訂單資料到視圖
+        
+        // 傳遞商品資料、訂單資料和訂單明細到視圖
         return view('order.order-edit', compact('order', 'products', 'orderDetails'));
     }
 
@@ -115,44 +115,60 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
+        
+        \Log::info('Update Order Request Data:', $request->all());
+        // 檢查訂單是否存在
+        //if (!$order) {
+            //return response()->json(['error' => '訂單不存在'], 404);
+        //}
+    
+        // 開啟資料庫交易
+        DB::beginTransaction();
+    
         try {
-            // 開啟資料庫交易
-            DB::beginTransaction();
-
             // 更新訂單資訊
+            /*
             $order->update([
                 'payment_method' => $request->input('paymentMethod'),
                 'is_paid' => $request->input('isPaid'),
                 'receiver_name' => $request->input('receiverName'),
                 // 其他需要更新的欄位...
             ]);
-
+            */
+            $order->payment_method = $request->input('paymentMethod');
+            //$order->is_paid = $request->input('isPaid');
+            $order->receiver_name = $request->input('receiverName');
+            $order->save();
+    
             // 更新訂單明細中的商品數量
             foreach ($order->orderDetails as $orderDetail) {
                 $productId = $orderDetail->product_id;
                 $quantity = $request->input("quantity.$productId", 1); // 如果沒有該商品的新數量，預設為 1
-
+    
+                /*
                 $orderDetail->update([
                     'quantity' => $quantity,
                     // 其他需要更新的訂單明細欄位...
                 ]);
+                */
+                $orderDetail->quantity = $quantity;
+                $orderDetail->save();
             }
-
-            // 其他需要更新的邏輯...
-
+    
             // 提交資料庫交易
             DB::commit();
 
-            return redirect()->route('order.index')->with('success', '訂單已成功修改');
+            return redirect()->route('order.detail', ['order' => $order->id])->with('success', '訂單已成功修改');
         } catch (\Exception $e) {
             // 如果有任何錯誤發生，回滾資料庫交易
             DB::rollBack();
-
+    
             // 處理錯誤，你可以根據實際情況進行適當的處理
-            dd($e);
             return back()->with('error', '訂單修改失敗：' . $e->getMessage());
         }
     }
+    
+    
 
     /**
      * Remove the specified resource from storage.
@@ -178,7 +194,10 @@ class OrderController extends Controller
 
     public function showOrderDetail(Order $order)
     {
-        // 傳遞訂單數據到訂單明細頁面
-        return view('order.orderdetail', ['order' => $order]);
+        // 取得此訂單的所有商品明細
+        $orderDetails = $order->orderDetails;
+        
+        // 傳遞訂單數據和商品明細到訂單明細頁面
+        return view('order.orderdetail', ['order' => $order, 'orderDetails' => $orderDetails]);
     }
 }

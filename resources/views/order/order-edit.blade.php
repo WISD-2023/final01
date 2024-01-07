@@ -5,31 +5,27 @@
 @section('content')
 <div class="container mx-auto my-8">
     <h1 class="text-4xl font-semibold mb-6">修改訂單</h1>
-    <form action="{{ route('order.update', $order->id) }}" method="post">
+    <form action="{{ route('order.update', ['order' => $order->id]) }}" method="post">
         @csrf
         @method('PUT')
 
         <div class="mb-4">
             <label for="paymentMethod" class="block text-sm font-medium text-gray-700">支付方式：</label>
             <select name="paymentMethod" id="paymentMethod" class="mt-1 p-2 border rounded-md w-full">
-                <option value="cash_on_delivery" @if($order->payment_method === 'cash_on_delivery') selected @endif>貨到府款</option>
-                <option value="online_payment" @if($order->payment_method === 'online_payment') selected @endif>線上支付</option>
-                <option value="bank_transfer" @if($order->payment_method === 'bank_transfer') selected @endif>銀行轉帳</option>
-                <option value="credit_card" @if($order->payment_method === 'credit_card') selected @endif>信用卡</option>
+                @foreach(['貨到府款', '線上支付', '銀行轉帳', '信用卡'] as $option)
+                    <option value="{{ $option }}" @if($order->payment_method === $option) selected @endif>{{ $option }}</option>
+                @endforeach
             </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="receiver_Name" class="block text-sm font-medium text-gray-700">收貨人姓名：</label>
+            <input type="text" name="receiverName" id="receiver_Name" class="mt-1 p-2 border rounded-md w-full" value="{{ $order->receiver_name }}">
         </div>
 
         <div class="mb-4">
             <label for="isPaid" class="block text-sm font-medium text-gray-700">是否支付：</label>
-            <select name="isPaid" id="isPaid" class="mt-1 p-2 border rounded-md w-full">
-                <option value="未付款" @if($order->is_paid === '未付款') selected @endif>未付款</option>
-                <option value="已付款" @if($order->is_paid === '已付款') selected @endif>已付款</option>
-            </select>
-        </div>
-
-        <div class="mb-4">
-            <label for="receiverName" class="block text-sm font-medium text-gray-700">收貨人姓名：</label>
-            <input type="text" name="receiverName" id="receiverName" class="mt-1 p-2 border rounded-md w-full" value="{{ $order->receiver_name }}">
+            <span class="mt-1 p-2 border rounded-md w-full bg-gray-100">{{ $order->is_paid }}</span>
         </div>
 
         <table class="table w-full border">
