@@ -45,21 +45,21 @@ class MembersFriendController extends Controller
     {
         // 取得輸入的好友姓名
         $friendName = $request->input('name');
-    
+
         // 檢查資料庫中是否有這個人
         $friend = User::where('name', $friendName)->first();
-    
+
         // 取得當前使用者的 ID
         $userId = Auth::id();
-    
+
         // 檢查是否為自己
         if ($friend && $friend->id !== $userId) {
-    
+
             // 檢查好友關係是否已存在
             $existingFriendship = MembersFriend::where('user_id', $userId)
                 ->where('friend_id', $friend->id)
                 ->first();
-    
+
             if (!$existingFriendship) {
                 // 建立好友關係
                 MembersFriend::create([
@@ -67,6 +67,7 @@ class MembersFriendController extends Controller
                     'friend_id' => $friend->id,
                     'date' => now(),
                 ]);
+
                 return redirect()->route('friend.index')->with('success', '成功新增好友！');
             } else {
                 return redirect()->route('friend.index')->withErrors(['error' => '你已經是朋友了！']);
@@ -75,8 +76,8 @@ class MembersFriendController extends Controller
             // 如果找不到對應的好友或是自己，回傳錯誤訊息
             return redirect()->route('friend.index')->withErrors(['error' => '沒有這個人或不能新增自己為好友！']);
         }
-    }    
-    
+    }
+
     /**
      * Display the specified resource.
      */
@@ -104,9 +105,12 @@ class MembersFriendController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MembersFriend $membersFriend)
+    public function destroy($id)
     {
         //
+        $delete = MembersFriend::find($id);
+        $delete->delete();
+        return redirect()->route('friend.index');
     }
 
     public function getFriendsList()

@@ -10,7 +10,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            
+
             <!-- Show error message -->
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -28,7 +28,7 @@
                 @method('POST')
                 <!-- Add friend -->
                 <div class="form-group mb-4">
-                    <label for="name">填寫好友姓名</label>
+                    <label for="name">加入好友</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="請輸入姓名">
                 </div>
                 <div class="mt-4 flex items-center justify-end gap-x-4">
@@ -50,10 +50,19 @@
                                         <p class="text-sm font-semibold leading-6 text-gray-900">{{ $member->name }}</p>
                                         <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ $member->email }}</p>
                                     </div>
+                                    @foreach($friends as $friend)
+                                        @if($friend->friend_id == $member->id)
+                                        <form action="{{ route('friend.destroy', $friend->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-danger" type="submit">移除</button>
+                                        </form>
+                                        @endif
+                                    @endforeach
+                                    @endforeach
                                 </div>
                                 <!-- Add other friend details as needed -->
                             </li>
-                        @endforeach
                     </ul>
                 @else
                     <p>沒有好友。</p>
