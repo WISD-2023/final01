@@ -34,9 +34,13 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('個人資料') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('friend.index')">
+                            {{ __('好友') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->

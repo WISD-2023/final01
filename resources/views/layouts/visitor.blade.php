@@ -80,6 +80,10 @@
                                 {{ __('個人資訊') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link :href="route('friend.index')">
+                                {{ __('好友') }}
+                            </x-dropdown-link>
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
