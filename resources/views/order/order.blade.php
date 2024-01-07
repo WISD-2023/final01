@@ -34,7 +34,7 @@
                                         <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded-md">付款</button>
                                     </form>
                                 @endif
-                                <a href="{{ route('order.detail', ['order' => $order]) }}" class="bg-green-500 text-white px-2 py-1 rounded-md">訂單明細</a>
+                                <a href="{{ route('order.detail.show', ['order' => $order]) }}" class="bg-green-500 text-white px-2 py-1 rounded-md">訂單明細</a>
                             </td>
                         </tr>
                     @endforeach

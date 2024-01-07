@@ -30,7 +30,7 @@
 
                 <!-- 訂單狀態按鈕 -->
                 <div>
-                    <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')"
+                    <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')"
                                 class="hover:underline">
                         {{ __('訂單狀態') }}
                     </x-nav-link>
