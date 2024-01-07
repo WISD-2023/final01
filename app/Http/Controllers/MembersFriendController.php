@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMembersFriendRequest;
 use App\Http\Requests\UpdateMembersFriendRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 
 class MembersFriendController extends Controller
@@ -66,7 +67,6 @@ class MembersFriendController extends Controller
                     'friend_id' => $friend->id,
                     'date' => now(),
                 ]);
-    
                 return redirect()->route('friend.index')->with('success', '成功新增好友！');
             } else {
                 return redirect()->route('friend.index')->withErrors(['error' => '你已經是朋友了！']);
@@ -108,4 +108,18 @@ class MembersFriendController extends Controller
     {
         //
     }
+
+    public function getFriendsList()
+    {
+        // 取得當前使用者的 ID
+        $userId = Auth::id();
+    
+        // 使用當前使用者的 ID 篩選好友資料
+        $friends = MembersFriend::where('user_id', $userId)->get();
+    
+        $friendIds = $friends->pluck('friend_id');
+        $members = User::whereIn('id', $friendIds)->get();
+    
+        return compact('friends', 'members');
+    }    
 }

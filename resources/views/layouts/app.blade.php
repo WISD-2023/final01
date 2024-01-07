@@ -29,9 +29,9 @@
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'public/js/giftOrder.js'])
 
-        <script src="{{ asset('js/cart.js') }}"></script>
+        <!-- <script src="{{ asset('js/giftOrder.js') }}"></script> -->
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         

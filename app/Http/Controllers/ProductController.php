@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\MembersFriend;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Controllers\MembersFriendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductController extends Controller
@@ -144,7 +147,7 @@ class ProductController extends Controller
         // 將商品和訂單資料傳遞到視圖中
         return redirect()->route('products.gift-order')->with('success', '成功送禮！');
     }
-
+    
     public function showGiftOrderPage(Request $request)
     {
         // 獲取表單中傳遞的商品 ID
@@ -153,7 +156,16 @@ class ProductController extends Controller
         // 這裡根據你的模型邏輯獲取商品詳細資訊
         $productDetails = Product::findOrFail($productId);
     
-        return view('products.gift-order', compact('productDetails'));
-    }
+        // 取得當前使用者的 ID
+        $userId = Auth::id();
     
+        // 使用當前使用者的 ID 篩選好友資料
+        $friends = MembersFriend::where('user_id', $userId)->get();
+    
+        $friendIds = $friends->pluck('friend_id');
+        $friendsList = User::whereIn('id', $friendIds)->get();
+    
+        return view('products.gift-order', compact('productDetails', 'friendsList'));
+    }
+     
 }
