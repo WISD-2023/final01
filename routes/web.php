@@ -30,9 +30,17 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
 
-Route::get('/order', [OrderController::class, 'index'])->name('order');
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
 
-Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::put('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
+Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
+
+
+Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay');
+Route::get('/orderdetail/show/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
+
 
 Route::middleware('auth')->group(function () {
     // 使用新的 MemberController 來更新個人資料
@@ -46,6 +54,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('friend', FriendController::class);
+
 /*
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
