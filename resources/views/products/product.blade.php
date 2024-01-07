@@ -38,7 +38,7 @@
 
                     @if(auth()->check())
                         <!-- 送禮按鈕 -->
-                        <form action="{{ route('products.gift-order', ['product' => $productDetails->id]) }}" method="post" style="background-color: transparent; border: none;">
+                        <form action="{{ route('products.show-gift-order', ['product' => $productDetails->id]) }}" method="post" style="background-color: transparent; border: none;">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
                             <button type="submit" class="flex items-center text-warning py-2 px-4">

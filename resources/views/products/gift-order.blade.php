@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mx-auto my-8">
-        <h1 class="text-3xl font-semibold mb-4">送禮訂單</h1>
+        <h1 class="text-3xl font-semibold mb-4">送禮</h1>
 
         <div class="flex">
             <!-- 顯示商品資訊 -->
@@ -14,7 +14,7 @@
 
             <!-- 送禮表單 -->
             <div class="w-1/2">
-                <form action="{{ route('order.gift-order') }}" method="post">
+                <form action="{{ route('products.gift-order') }}" method="post">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
 

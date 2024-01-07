@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -90,7 +94,21 @@ class ProductController extends Controller
     
         // 使用商品 ID 查找相應的商品
         $product = Product::findOrFail($productId);
-    
+
+        // 創建訂單實例
+        $order = new Order();
+
+        // 設定訂單相關屬性
+        $order->user_id = auth()->user()->id;
+        $order->payment_method = $request->input('payment_method');
+        $order->is_paid = $request->input('is_paid');
+        $order->receiver_name = $request->input('recipient_name');
+        $order->status = $request->input('status');
+
+        // 保存訂單
+        $order->save();
+
+        /*
         // 在這裡應該建立訂單而不是商品
         $order = Order::create([
             // 根據你的訂單模型的欄位進行設定
@@ -101,16 +119,41 @@ class ProductController extends Controller
             'status' => $request->input('status'), // 根據你的表單欄位進行設定
             // 其他訂單相關欄位...
         ]);
-    
+        */
+
+        // 創建訂單明細實例
+        $orderDetail = new OrderDetail();
+
+        // 設定訂單明細相關屬性
+        $orderDetail->order_id = $order->id; // 假設這裡 $order 是先前已經創建好的訂單實例
+        $orderDetail->product_id = $product->id;
+        $orderDetail->quantity = 1; // 假設每個訂單明細只包含一個商品，根據實際情況調整
+
+        // 保存訂單明細
+        $orderDetail->save();
+
+        /*
         // 同時建立訂單明細
         OrderDetail::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
             'quantity' => 1, // 假設每個訂單明細只包含一個商品，根據實際情況調整
         ]);
+        */
     
         // 將商品和訂單資料傳遞到視圖中
-        return redirect()->route('products.gift-order', ['product' => $product])->with('success', '成功送禮！');
+        return redirect()->route('products.gift-order')->with('success', '成功送禮！');
+    }
+
+    public function showGiftOrderPage(Request $request)
+    {
+        // 獲取表單中傳遞的商品 ID
+        $productId = $request->input('product_id');
+    
+        // 這裡根據你的模型邏輯獲取商品詳細資訊
+        $productDetails = Product::findOrFail($productId);
+    
+        return view('products.gift-order', compact('productDetails'));
     }
     
 }

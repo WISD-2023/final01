@@ -50,7 +50,8 @@ Route::middleware(['web', 'auth'])->group(function () {
 
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 
-Route::post('/product/{product}/gift-order', [ProductController::class, 'giftOrder'])->name('products.gift-order');
+Route::post('/product/gift-order', [ProductController::class, 'giftOrder'])->name('products.gift-order');
+Route::post('/product/{product}/gift-order', [ProductController::class, 'showGiftOrderPage'])->name('products.show-gift-order');
 
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
 
