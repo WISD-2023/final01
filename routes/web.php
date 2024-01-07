@@ -38,18 +38,19 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::put('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
 Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
 
-
 Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay');
 Route::get('/orderdetail/show/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show');
-
 
 Route::middleware(['web', 'auth'])->group(function () {
     // 使用新的 MemberController 來更新個人資料
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
     Route::resource('friend', MembersFriendController::class)->except(['create', 'store']);
-    Route::post('/friend', [MembersFriendController::class, 'store'])->name('friend.store'); // 確保這行是 POST 方法
+    Route::post('/friend', [MembersFriendController::class, 'store'])->name('friend.store');
 });
 
+Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+
+Route::post('/product/{product}/gift-order', [ProductController::class, 'giftOrder'])->name('products.gift-order');
 
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
 

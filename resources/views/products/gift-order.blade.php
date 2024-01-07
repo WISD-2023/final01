@@ -14,16 +14,19 @@
 
             <!-- 送禮表單 -->
             <div class="w-1/2">
-                <form action="{{ route('gift.store') }}" method="post">
+                <form action="{{ route('order.gift-order') }}" method="post">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
+
+                    <!-- 商品資訊 -->
+                    <!-- ...（略） -->
 
                     <!-- 收禮者姓名 -->
                     <div class="mb-4">
                         <label for="recipient_name" class="block text-sm font-medium text-gray-700">收禮者姓名</label>
                         <input type="text" name="recipient_name" id="recipient_name" class="mt-1 p-2 w-full border rounded-md">
                     </div>
-                    
+
                     <!-- 送禮者姓名 -->
                     <div class="mb-4">
                         <label for="sender_name" class="block text-sm font-medium text-gray-700">送禮者姓名</label>
@@ -34,6 +37,24 @@
                     <div class="mb-4">
                         <label for="sender_email" class="block text-sm font-medium text-gray-700">送禮者電子郵件</label>
                         <input type="email" name="sender_email" id="sender_email" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+
+                    <!-- 付款方式 -->
+                    <div class="mb-4">
+                        <label for="payment_method" class="block text-sm font-medium text-gray-700">付款方式</label>
+                        <input type="text" name="payment_method" id="payment_method" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+
+                    <!-- 是否已付款 -->
+                    <div class="mb-4">
+                        <label for="is_paid" class="block text-sm font-medium text-gray-700">是否已付款</label>
+                        <input type="text" name="is_paid" id="is_paid" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+
+                    <!-- 訂單狀態 -->
+                    <div class="mb-4">
+                        <label for="status" class="block text-sm font-medium text-gray-700">訂單狀態</label>
+                        <input type="text" name="status" id="status" class="mt-1 p-2 w-full border rounded-md">
                     </div>
 
                     <!-- 送禮按鈕 -->
