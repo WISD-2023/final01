@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\MembersFriend;
 use App\Http\Requests\StoreMembersFriendRequest;
 use App\Http\Requests\UpdateMembersFriendRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MembersFriendController extends Controller
 {
@@ -14,6 +16,16 @@ class MembersFriendController extends Controller
     public function index()
     {
         //
+        // 取得當前使用者的 ID
+        $userId = Auth::id();
+
+        // 使用當前使用者的 ID 篩選好友資料
+        $friends = MembersFriend::where('user_id', $userId)->get();
+
+        $friendIds = $friends->pluck('friend_id');
+        $members = User::whereIn('id', $friendIds)->get();
+
+        return view('friend.index', compact('friends', 'members'));
     }
 
     /**
