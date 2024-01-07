@@ -11,7 +11,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,12 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             //
+            'user_id' => 'required|numeric',
+            'payment_method' => 'required|string',
+            'is_paid' => 'required|string',
+            'receiver_name' => 'required|string',
+            'status' => 'required|string',
+            // 其他訂單相關屬性的驗證...
         ];
     }
 }

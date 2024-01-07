@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '商品詳細資訊')
+@section('title', '社交購物商場 - 商品詳細資訊')
 
 @section('content')
     <div class="container mx-auto my-8">
@@ -27,7 +27,6 @@
                     <div class="rounded-full bg-gray-300 px-4 py-2 mr-2">
                         {{ $productDetails->status }}
                     </div>
-                    
                     <!-- 加入購物車按鈕 -->
                     <form action="{{ route('cart.store') }}" method="post">
                         @csrf
@@ -36,13 +35,24 @@
                             <i class="bi bi-cart-fill mr-2"></i> 加入購物車
                         </button>
                     </form>
+
+                    @if(auth()->check())
+                        <!-- 送禮按鈕 -->
+                        <form action="{{ route('products.show-gift-order', ['product' => $productDetails->id]) }}" method="post" style="background-color: transparent; border: none;">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
+                            <button type="submit" class="flex items-center text-warning py-2 px-4">
+                                <i class="bi bi-gift mr-2"></i>
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
 
         <hr class="my-6">
-         <!-- 顯示商品評論 -->
-         <div>
+        <!-- 顯示商品評論 -->
+        <div>
             <h3 class="text-2xl font-bold mb-4">商品評論</h3>
 
             @forelse($productDetails->reviews as $review)
