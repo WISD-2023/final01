@@ -62,9 +62,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('seller', SellerController::class)->except(['store', 'create']);
-Route::get('/seller/market/index', [SellerController::class, 'create'])->name('seller.create');
+Route::get('/seller/index', [SellerController::class, 'create'])->name('seller.create');
 
-Route::resource('market', MarketController::class);
+Route::resource('seller.market', MarketController::class)->except(['show', 'create']);
+Route::get('/seller/market/index', [MarketController::class, 'create'])->name('seller.market.create');
+Route::get('/seller/market/{market}', [MarketController::class, 'show'])->name('seller.market.show');
 /*
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -18,13 +18,9 @@ class SellerController extends Controller
         //
         $user = Auth::user();
         $seller = $user->seller;
-        if ($user->seller) {
-            return view('seller.index',compact('user','seller'));
-        } else {
-            return view('seller.index',compact('user','seller'));
-        }
-
+        return view('seller.index',compact('user','seller'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,15 +29,14 @@ class SellerController extends Controller
     {
         //
         $user = Auth::user();
-        $seller = $user->seller;
         Seller::create([
             'user_id' => $user->id,
             'type' => "個人",
             'status' => "線上",
             'rating' => 4.30
         ]);
-        $markets = Market::whereIn('seller_id',$seller->pluck('id'));
-        return view('seller.market.index',compact('user','seller','markets'));
+        $seller = $user->seller;
+        return view('seller.index',compact('user','seller'));
     }
 
     /**
