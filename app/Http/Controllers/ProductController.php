@@ -104,9 +104,9 @@ class ProductController extends Controller
         // 設定訂單相關屬性
         $order->user_id = auth()->user()->id;
         $order->payment_method = $request->input('payment_method');
-        $order->is_paid = $request->input('is_paid');
+        $order->is_paid = '未付款';
         $order->receiver_name = $request->input('recipient_name');
-        $order->status = $request->input('status');
+        $order->status = '審核中';
 
         // 保存訂單
         $order->save();
@@ -145,13 +145,13 @@ class ProductController extends Controller
         */
     
         // 將商品和訂單資料傳遞到視圖中
-        return redirect()->route('products.gift-order')->with('success', '成功送禮！');
+        return redirect()->route('order.index')->with('success', '成功送禮！');
     }
     
-    public function showGiftOrderPage(Request $request)
+    public function showGiftOrderPage(Request $request, Product $product)
     {
         // 獲取表單中傳遞的商品 ID
-        $productId = $request->input('product_id');
+        $productId = $product->id;
     
         // 這裡根據你的模型邏輯獲取商品詳細資訊
         $productDetails = Product::findOrFail($productId);
