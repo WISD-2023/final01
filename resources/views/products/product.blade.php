@@ -60,6 +60,33 @@
             @empty
                 <p>目前尚無評論。</p>
             @endforelse
+
+            <!-- 評論表單 -->
+            @auth
+                <form action="{{ route('reviews.store', ['product' => $productDetails->id]) }}" method="post" class="mt-4">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="content" class="block text-lg font-medium text-gray-800">評論內容</label>
+                        <textarea name="content" id="content" rows="3" class="mt-1 p-2 w-full border rounded-md text-lg" style="margin-bottom: 0.5rem;" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="rating" class="block text-lg font-medium text-gray-800">評分</label>
+                        <select name="rating" id="rating" class="mt-1 p-2 w-full border rounded-md text-lg text-gray-500" style="margin-bottom: 0.5rem;" required>
+                            <option value="" disabled selected>請選擇分數</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">提交評論</button>
+                </form>
+            @else
+                <div class="mt-4 text-xl font-bold text-gray-600">
+                    請登入後發表評論。
+                </div>
+            @endauth
         </div>
     </div>
 @endsection
