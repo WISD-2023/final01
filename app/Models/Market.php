@@ -10,6 +10,7 @@ class Market extends Model
     use HasFactory;
 
     protected $fillable = [
+        'seller_id',
         'name',
         'description',
     ];

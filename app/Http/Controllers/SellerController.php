@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Market;
 use App\Models\Seller;
 use App\Http\Requests\StoreSellerRequest;
 use App\Http\Requests\UpdateSellerRequest;
@@ -16,11 +17,11 @@ class SellerController extends Controller
     {
         //
         $user = Auth::user();
-
+        $seller = $user->seller;
         if ($user->seller) {
-            return view('seller.index',compact('user'));
+            return view('seller.index',compact('user','seller'));
         } else {
-            return view('seller.index',compact('user'));
+            return view('seller.index',compact('user','seller'));
         }
 
     }
@@ -32,13 +33,15 @@ class SellerController extends Controller
     {
         //
         $user = Auth::user();
+        $seller = $user->seller;
         Seller::create([
             'user_id' => $user->id,
             'type' => "個人",
             'status' => "線上",
             'rating' => 4.30
         ]);
-        return view('seller.market.index',compact('user'));
+        $markets = Market::whereIn('seller_id',$seller->pluck('id'));
+        return view('seller.market.index',compact('user','seller','markets'));
     }
 
     /**

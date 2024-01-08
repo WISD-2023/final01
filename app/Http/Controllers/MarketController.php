@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Market;
+use App\Models\Seller;
 use App\Http\Requests\StoreMarketRequest;
 use App\Http\Requests\UpdateMarketRequest;
+use Illuminate\Support\Facades\Auth;
 
 class MarketController extends Controller
 {
@@ -14,6 +16,11 @@ class MarketController extends Controller
     public function index()
     {
         //
+        //$user = Auth::user();
+        //$userid = Auth::user()->pluck('id');
+        //$seller = Seller::where('user_id', $userid);
+
+        //return view('seller.market.index', compact('user', 'seller'));
     }
 
     /**
@@ -21,7 +28,15 @@ class MarketController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $seller = $user->seller;
+        Market::create([
+            'seller_id' => $seller->id,
+            'name' => "你的賣場",
+            'description' => "賣場描述",
+        ]);
+        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
+        return view('seller.market.index',compact('seller','markets'));
     }
 
     /**
