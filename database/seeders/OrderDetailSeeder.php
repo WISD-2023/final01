@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\OrderDetail;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,9 @@ class OrderDetailSeeder extends Seeder
             'order_id' => function () use ($orderIds) {
                 return \Illuminate\Support\Arr::random($orderIds);
             },
+            'product_id' => function () {
+                return Product::inRandomOrder()->first()->id;
+            }
         ]);
     }
 }

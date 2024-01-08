@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,17 +16,9 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         //
-        Cart::all()->take(3)->each(function($cart){
-            Order::factory(1)->create([
-                'product_id' => $cart->product_id
-            ]);
-        });
-
-        Product::all()->take(2)->each(function($product){
-            Order::factory(1)->create([
-                'product_id' => function () {
-                    return Product::inRandomOrder()->first()->id;
-                }
+        User::all()->take(5)->each(function($user){
+            Order::factory(5)->create([
+                'user_id' => $user->id,
             ]);
         });
 

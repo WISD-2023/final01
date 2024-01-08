@@ -11,7 +11,7 @@ class StoreMembersFriendRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,7 @@ class StoreMembersFriendRequest extends FormRequest
     {
         return [
             //
+            'name' => 'required|string', 
         ];
     }
 }
