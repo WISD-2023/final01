@@ -6,6 +6,7 @@ use App\Http\Controllers\MembersFriendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\MarketController;
 
@@ -49,6 +50,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
     Route::resource('friend', MembersFriendController::class)->except(['create', 'store']);
     Route::post('/friend', [MembersFriendController::class, 'store'])->name('friend.store');
+    Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');

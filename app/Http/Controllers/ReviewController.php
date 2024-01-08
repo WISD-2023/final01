@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\Product;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
 
@@ -27,9 +28,24 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReviewRequest $request)
+    public function store(StoreReviewRequest $request, Product $product)
     {
-        //
+        // 創建評論實例
+        $review = new Review();
+
+        // 設定評論相關屬性
+        $review->user_id = auth()->user()->id; // 使用當前登入用戶的 ID 作為評論者的 ID
+        $review->content = $request->input('content');
+        $review->rating = $request->input('rating');
+        
+        // 關聯評論與商品
+        $review->product()->associate($product);
+
+        // 保存評論
+        $review->save();
+
+        // 導向商品詳細資訊頁面
+        return redirect()->route('products.product', ['product' => $product->id])->with('success', '評論成功！');
     }
 
     /**

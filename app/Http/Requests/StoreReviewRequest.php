@@ -11,7 +11,7 @@ class StoreReviewRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            // 根據你的需求添加驗證規則
+            'content' => 'required|string',
+            'rating' => 'required|integer|between:1,5',
         ];
     }
 }
