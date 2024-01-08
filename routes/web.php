@@ -6,6 +6,7 @@ use App\Http\Controllers\MembersFriendController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SellerController;
 // use App\Http\Controllers\FriendController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,8 @@ Route::get('/product/{product}', [ProductController::class, 'show'])->name('prod
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('seller', SellerController::class)->except(['store', 'create']);
 
 /*
 Route::middleware('auth')->group(function () {

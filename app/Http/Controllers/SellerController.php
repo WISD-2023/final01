@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Seller;
 use App\Http\Requests\StoreSellerRequest;
 use App\Http\Requests\UpdateSellerRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
 {
@@ -14,6 +15,14 @@ class SellerController extends Controller
     public function index()
     {
         //
+        $user = Auth::user();
+
+        if ($user->seller) {
+            return view('seller.index',compact('user'));
+        } else {
+            return view('seller.index',compact('user'));
+        }
+
     }
 
     /**
@@ -22,6 +31,14 @@ class SellerController extends Controller
     public function create()
     {
         //
+        $user = Auth::user();
+        Seller::create([
+            'user_id' => $user->id,
+            'type' => "個人",
+            'status' => "線上",
+            'rating' => 4.30
+        ]);
+        return view('seller.market.index',compact('user'));
     }
 
     /**
