@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\MarketController;
 // use App\Http\Controllers\FriendController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +62,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('seller', SellerController::class)->except(['store', 'create']);
+Route::get('/seller/market/index', [SellerController::class, 'create'])->name('seller.create');
 
+Route::resource('market', MarketController::class);
 /*
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
