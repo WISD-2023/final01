@@ -45,18 +45,19 @@ class SellerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMarketRequest $request)
     {
-        //
         $user = Auth::user();
-        Seller::create([
-            'user_id' => $user->id,
-            'type' => "個人",
-            'status' => "線上",
-            'rating' => 4.30
-        ]);
         $seller = $user->seller;
-        return view('seller.index',compact('user','seller'));
+    
+        Market::create([
+            'seller_id' => $seller->id,
+            'name' => "你的賣場",
+            'description' => "賣場描述",
+        ]);
+    
+        // 重定向到另一個路由，例如 'seller.market.index'
+        return redirect()->route('seller.market.index');
     }
 
     /**
