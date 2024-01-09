@@ -24,7 +24,7 @@
                 <h1>賣場:{{ $market->id }}</h1>
                 <p>這是你的賣場內容。</p>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('seller.market.store',$market->id) }}">
+                    <form method="POST" action="{{ route('seller.market.update',$market->id) }}">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('賣場名稱') }}</label>
@@ -40,7 +40,7 @@
                         <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('賣場描述') }}</label>
                             <div class="col-md-6">
-                                <input id="description" type="text" name="contact" value="{{ $market->description }}" required autocomplete="contact">
+                                <input id="description" type="text" name="description" value="{{ $market->description }}" required autocomplete="description">
                                 @error('contact')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('修改') }}
+                                    {{ __('儲存') }}
                                 </button>
                             </div>
                         </div>
