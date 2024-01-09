@@ -48,10 +48,12 @@ Route::get('/orderdetail/show/{order}', [OrderController::class, 'showOrderDetai
 Route::middleware(['web', 'auth'])->group(function () {
     // 使用新的 MemberController 來更新個人資料
     Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile');
-    Route::resource('friend', MembersFriendController::class)->except(['create', 'store']);
     Route::post('/friend', [MembersFriendController::class, 'store'])->name('friend.store');
+    Route::resource('friend', MembersFriendController::class)->except(['create', 'store']);
     Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
+
+//Route::delete('/friend/{friend}', [MembersFriendController::class, 'destroy'])->name('friend.destroy');
 
 Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 

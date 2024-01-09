@@ -17,18 +17,17 @@ class MembersFriendController extends Controller
      */
     public function index()
     {
-        //
         // 取得當前使用者的 ID
         $userId = Auth::id();
-
+        
         // 使用當前使用者的 ID 篩選好友資料
         $friends = MembersFriend::where('user_id', $userId)->get();
-
+        
         $friendIds = $friends->pluck('friend_id');
         $members = User::whereIn('id', $friendIds)->get();
-
+        
         return view('friend.index', compact('friends', 'members'));
-    }
+    }      
 
     /**
      * Show the form for creating a new resource.
@@ -105,12 +104,12 @@ class MembersFriendController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(MembersFriend $friend)
     {
-        //
-        $delete = MembersFriend::find($id);
-        $delete->delete();
-        return redirect()->route('friend.index');
+        // 刪除好友關係
+        $friend->delete();
+    
+        return redirect()->route('friend.index')->with('success', '成功移除好友！');
     }
 
     public function getFriendsList()

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '社交購物商場')
+@section('title', '社交購物商場 - 好友')
 
 @section('content')
     <div class="container mx-auto py-8">
@@ -39,30 +39,25 @@
             <h1 class="text-3xl font-semibold mb-4">好友列表</h1>
 
             <!-- Profile Section -->
-            <div class="mb-8">
-                @if(count($members) > 0)
+            <div class="mb-8 border border-gray-300 p-4 rounded">
+                @if(count($friends) > 0)
                     <ul role="list" class="divide-y divide-gray-100">
-                        @foreach($members as $member)
+                        @foreach($friends as $friend)
                             <li class="flex justify-between gap-x-6 py-1">
                                 <div class="flex min-w-0 gap-x-4">
-                                    <img class="h-10 w-10 flex-none rounded-full bg-gray-50" src="{{ $member->profile_image_url }}" alt="">
                                     <div class="min-w-0 flex-auto">
-                                        <p class="text-sm font-semibold leading-6 text-gray-900">{{ $member->name }}</p>
-                                        <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ $member->email }}</p>
+                                        <p class="text-sm font-semibold leading-6 text-gray-900">{{ $friend->user->name }}</p>
+                                        <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ $friend->user->email }}</p>
                                     </div>
-                                    @foreach($friends as $friend)
-                                        @if($friend->friend_id == $member->id)
-                                        <form action="{{ route('friend.destroy', $friend->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger" type="submit">移除</button>
-                                        </form>
-                                        @endif
-                                    @endforeach
-                                    @endforeach
                                 </div>
                                 <!-- Add other friend details as needed -->
+                                <form action="{{ route('friend.destroy', $friend->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger" type="submit" style="background-color: #e53e3e;">移除</button>
+                                </form>
                             </li>
+                        @endforeach
                     </ul>
                 @else
                     <p>沒有好友。</p>

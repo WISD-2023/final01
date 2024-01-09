@@ -28,6 +28,10 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
+        <!-- Add this line in the head section of your HTML file -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-dPR1I3+5Cv/e9dBr6P0kMQjeEOrSRKBnBqTb8BdouZETPsEgXr36bBzmMvPL+Z4LIfqsRiN6pz5sfxkOY6AK+Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js', 'public/js/giftOrder.js'])
 
