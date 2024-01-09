@@ -49,6 +49,12 @@ class SellerController extends Controller
     public function store(StoreMarketRequest $request)
     {
 
+        Seller::create([
+            'user_id' => $request->user()->id,
+            'type' => "個人",
+            'status' => "啟用",
+            'rating' => 0,
+        ]);
         Market::create([
             'seller_id' => $request->user()->id,
             'name' => "你的賣場",
@@ -56,7 +62,6 @@ class SellerController extends Controller
         ]);
 
         // 重定向到另一個路由，例如 'seller.market.index'
-
         return redirect()->route('seller.market.store');
     }
 
