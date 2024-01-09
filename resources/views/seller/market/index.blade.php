@@ -21,12 +21,11 @@
                     </ul>
                 </div>
             @endif
-                {{ $A=FALSE }}
+                <p>以下是你的賣場。</p>
                     @foreach($markets as $market)
                         @if ($market->seller_id == $seller->id)
-                            {{ $A=true }}
                             <div class="min-w-0 flex-auto">
-                                <p class="text-sm font-semibold leading-6 text-gray-900">{{ $market->id }}</p>
+                                <p class="text-sm font-semibold leading-6 text-gray-900" {{ $A=true }}>{{ $market->id }}</p>
                                 <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ $market->name }}</p>
                             </div>
                             <form action="{{ route('seller.market.show',$market->id) }}" method="GET">

@@ -18,7 +18,11 @@ class SellerController extends Controller
         //
         $user = Auth::user();
         $seller = $user->seller;
-        return view('seller.index',compact('user','seller'));
+        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
+        if ($user->seller)
+            return view('seller.market.index', compact('user','seller', 'markets'));
+        else
+            return view('seller.index',compact('user','seller'));
     }
 
 
