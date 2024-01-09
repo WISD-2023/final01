@@ -29,6 +29,15 @@ class MarketController extends Controller
      */
     public function create()
     {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreMarketRequest $request)
+    {
+        //
         $user = Auth::user();
         $seller = $user->seller;
         Market::create([
@@ -38,14 +47,6 @@ class MarketController extends Controller
         ]);
         $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
         return view('seller.market.index',compact('seller','markets'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMarketRequest $request)
-    {
-        //
     }
 
     /**

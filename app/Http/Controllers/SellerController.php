@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Market;
 use App\Models\Seller;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreSellerRequest;
 use App\Http\Requests\UpdateSellerRequest;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,14 @@ class SellerController extends Controller
     public function create()
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
         $user = Auth::user();
         Seller::create([
             'user_id' => $user->id,
@@ -48,14 +57,6 @@ class SellerController extends Controller
         ]);
         $seller = $user->seller;
         return view('seller.index',compact('user','seller'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSellerRequest $request)
-    {
-        //
     }
 
     /**
