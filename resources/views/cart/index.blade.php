@@ -64,8 +64,13 @@
 
                     <!-- 收貨人姓名 -->
                     <div class="mb-4">
-                        <label for="receiverName" class="block text-sm font-medium text-gray-600">收貨人姓名</label>
-                        <input type="text" name="receiverName" id="receiverName" class="w-full p-2 border rounded-md" required>
+                        <label for="receiverNameDropdown" class="block text-sm font-medium text-gray-600">收貨人姓名</label>
+                        <select name="receiverNameDropdown" id="receiverNameDropdown" class="w-full p-2 border rounded-md" required>
+                            <option value="{{ auth()->user()->name }}">{{ auth()->user()->name }}</option>
+                            @foreach($friends as $friend)
+                                <option value="{{ $friend->name }}">{{ $friend->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <!-- 其他收貨人資訊，根據需要添加 -->

@@ -125,5 +125,5 @@ class MembersFriendController extends Controller
         $members = User::whereIn('id', $friendIds)->get();
     
         return compact('friends', 'members');
-    }    
+    }
 }

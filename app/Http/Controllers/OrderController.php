@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\MembersFriend;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use Illuminate\Http\Request;
@@ -51,7 +53,7 @@ class OrderController extends Controller
             $order->status = "審核中";
             $order->is_paid = "未付款";
             $order->payment_method = $request->paymentMethod;
-            $order->receiver_name = $request->receiverName;
+            $order->receiver_name = $request->input('receiverNameDropdown'); // 修改這裡
             $order->user_id = $userId; // 將購物車ID存入訂單
             // 其他收貨人資訊的處理，根據實際情況添加
             $order->save();
@@ -83,7 +85,7 @@ class OrderController extends Controller
     
             // 其他相關邏輯，例如發送確認郵件等...
     
-            return redirect()->route('order.index')->with('success', '訂單已成功刪除');
+            return redirect()->route('order.index')->with('success', '訂單已成功建立');
         } catch (\Exception $e) {
             // 如果有任何錯誤發生，回滾資料庫交易
             DB::rollBack();
@@ -93,7 +95,6 @@ class OrderController extends Controller
             return back()->with('error', '訂單建立失敗：' . $e->getMessage());
         }
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -105,10 +106,15 @@ class OrderController extends Controller
     
         // 取得商品資料
         $products = Product::whereIn('id', $orderDetails->pluck('product_id')->toArray())->get();
-        
-        // 傳遞商品資料、訂單資料和訂單明細到視圖
-        return view('order.order-edit', compact('order', 'products', 'orderDetails'));
-    }
+    
+        // 取得當前使用者的所有朋友姓名
+        $userId = auth()->id();
+        $friendIds = MembersFriend::where('user_id', $userId)->pluck('friend_id');
+        $friends = User::whereIn('id', $friendIds)->get();
+    
+        // 傳遞商品資料、訂單資料、訂單明細和朋友到視圖
+        return view('order.order-edit', compact('order', 'products', 'orderDetails', 'friends'));
+    }    
 
     /**
      * Update the specified resource in storage.
@@ -158,7 +164,7 @@ class OrderController extends Controller
             // 提交資料庫交易
             DB::commit();
 
-            return redirect()->route('order.detail', ['order' => $order->id])->with('success', '訂單已成功修改');
+            return redirect()->route('order.detail.show', ['order' => $order->id])->with('success', '訂單已成功修改');
         } catch (\Exception $e) {
             // 如果有任何錯誤發生，回滾資料庫交易
             DB::rollBack();
@@ -167,8 +173,6 @@ class OrderController extends Controller
             return back()->with('error', '訂單修改失敗：' . $e->getMessage());
         }
     }
-    
-    
 
     /**
      * Remove the specified resource from storage.
@@ -196,8 +200,13 @@ class OrderController extends Controller
     {
         // 取得此訂單的所有商品明細
         $orderDetails = $order->orderDetails;
-        
-        // 傳遞訂單數據和商品明細到訂單明細頁面
-        return view('order.orderdetail', ['order' => $order, 'orderDetails' => $orderDetails]);
-    }
+    
+        // 取得當前使用者的所有朋友姓名
+        $userId = auth()->id();
+        $friendIds = MembersFriend::where('user_id', $userId)->pluck('friend_id');
+        $friends = User::whereIn('id', $friendIds)->get();
+    
+        // 傳遞訂單數據、商品明細和朋友到訂單明細頁面
+        return view('order.orderdetail', ['order' => $order, 'orderDetails' => $orderDetails, 'friends' => $friends]);
+    }    
 }

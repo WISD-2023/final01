@@ -5,6 +5,21 @@
 @section('content')
 <div class="container mx-auto my-8">
     <h1 class="text-4xl font-semibold mb-6">修改訂單</h1>
+    
+    {{-- 顯示成功訊息 --}}
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- 顯示錯誤訊息 --}}
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form action="{{ route('order.update', ['order' => $order->id]) }}" method="post">
         @csrf
         @method('PUT')
@@ -19,9 +34,18 @@
         </div>
 
         <div class="mb-4">
-            <label for="receiver_Name" class="block text-sm font-medium text-gray-700">收貨人姓名：</label>
-            <input type="text" name="receiverName" id="receiver_Name" class="mt-1 p-2 border rounded-md w-full" value="{{ $order->receiver_name }}">
+            <label for="receiverNameDropdown" class="block text-sm font-medium text-gray-700">收貨人姓名：</label>
+            <select name="receiverName" id="receiverNameDropdown" class="w-full p-2 border rounded-md" required>
+                <option value="{{ $order->receiver_name }}" selected>{{ $order->receiver_name }}</option>
+                <option value="{{ auth()->user()->name }}">{{ auth()->user()->name }}</option>
+                @foreach($friends as $friend)
+                    @if($friend->name !== $order->receiver_name)
+                        <option value="{{ $friend->name }}">{{ $friend->name }}</option>
+                    @endif
+                @endforeach
+            </select>
         </div>
+
 
         <div class="mb-4">
             <label for="isPaid" class="block text-sm font-medium text-gray-700">是否支付：</label>
