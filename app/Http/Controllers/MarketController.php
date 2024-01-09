@@ -17,11 +17,10 @@ class MarketController extends Controller
      */
     public function index()
     {
-        //
         $user = Auth::user();
         $seller = $user->seller;
-        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
-        return view('seller.market.index', compact('user','seller', 'markets'));
+        $markets = Market::whereIn('seller_id', $seller->pluck('id'))->get();
+        return view('seller.market.index', compact('user', 'seller', 'markets'));
     }
 
     /**
@@ -37,16 +36,15 @@ class MarketController extends Controller
      */
     public function store(StoreMarketRequest $request)
     {
-        //
         $user = Auth::user();
         $seller = $user->seller;
         Market::create([
-            'seller_id' => $seller->id,
+            'seller_id' => $request->user()->id,
             'name' => "你的賣場",
             'description' => "賣場描述",
         ]);
-        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
-        return view('seller.market.index',compact('seller','markets'));
+        $markets = Market::where('seller_id', $request->user()->id)->get();
+        return view('seller.market.index', compact('user', 'seller', 'markets'));
     }
 
     /**
@@ -54,9 +52,8 @@ class MarketController extends Controller
      */
     public function show(Market $market)
     {
-        //
-        $products = Product::whereIn('market_id',$market->pluck('id'))->get();
-        return view('seller.market.show',compact('market','products'));
+        $products = Product::whereIn('market_id', $market->pluck('id'))->get();
+        return view('seller.market.show', compact('market', 'products'));
     }
 
     /**
@@ -72,16 +69,12 @@ class MarketController extends Controller
      */
     public function update(Request $request, Market $market)
     {
-        //
         $market->update([
             'name'    => $request->input('name'),
             'description' => $request->input('description'),
         ]);
-        //$request->market()->fill($request->validated());
-        //$request->market()->update();
-        //$request->market()->save();
-        $products = Product::whereIn('market_id',$market->pluck('id'))->get();
-        return view('seller.market.show',compact('market','products'));
+        $products = Product::whereIn('market_id', $market->pluck('id'))->get();
+        return view('seller.market.show', compact('market', 'products'));
     }
 
     /**

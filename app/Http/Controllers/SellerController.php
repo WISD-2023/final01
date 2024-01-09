@@ -6,6 +6,7 @@ use App\Models\Market;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreSellerRequest;
+use App\Http\Requests\StoreMarketRequest;
 use App\Http\Requests\UpdateSellerRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,11 +27,11 @@ class SellerController extends Controller
         } else {
             return view('seller.index', compact('user', 'seller'));
         }
-        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
+        $markets = Market::whereIn('seller_id', $seller->pluck('id'))->get();
         if ($user->seller)
-            return view('seller.market.index', compact('user','seller', 'markets'));
+            return view('seller.market.index', compact('user', 'seller', 'markets'));
         else
-            return view('seller.index',compact('user','seller'));
+            return view('seller.index', compact('user', 'seller'));
     }
 
 
@@ -47,17 +48,16 @@ class SellerController extends Controller
      */
     public function store(StoreMarketRequest $request)
     {
-        $user = Auth::user();
-        $seller = $user->seller;
-    
+
         Market::create([
-            'seller_id' => $seller->id,
+            'seller_id' => $request->user()->id,
             'name' => "你的賣場",
             'description' => "賣場描述",
         ]);
-    
+
         // 重定向到另一個路由，例如 'seller.market.index'
-        return redirect()->route('seller.market.index');
+
+        return redirect()->route('seller.market.store');
     }
 
     /**
