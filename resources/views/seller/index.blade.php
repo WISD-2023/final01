@@ -22,16 +22,18 @@
                 </div>
             @endif
                 @if ($user->seller)
-                    <h1>賣家資訊</h1>
-                    <p>這是你的賣場內容。</p>
-                    {{ $seller->market }}
+                    <div class="mt-4 flex items-center justify-end gap-x-4">
+                        <form action="{{ route('seller.market.index',$user->seller) }}">
+                            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">查看賣場</button>
+                        </form>
+                    </div>
                 @else
                     <p>你還不是賣家。</p>
-                        <div class="mt-4 flex items-center justify-end gap-x-4">
-                            <form action="{{ route('seller.create',$user) }}">
-                                <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">成為賣家</button>
-                            </form>
-                        </div>
+                    <div class="mt-4 flex items-center justify-end gap-x-4">
+                        <form action="{{ route('seller.create',$user) }}">
+                            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">成為賣家</button>
+                        </form>
+                    </div>
                 @endif
         </div>
     </div>

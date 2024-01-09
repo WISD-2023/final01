@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Market;
 use App\Models\Seller;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreMarketRequest;
 use App\Http\Requests\UpdateMarketRequest;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +18,10 @@ class MarketController extends Controller
     public function index()
     {
         //
-        //$user = Auth::user();
-        //$userid = Auth::user()->pluck('id');
-        //$seller = Seller::where('user_id', $userid);
-
-        //return view('seller.market.index', compact('user', 'seller'));
+        $user = Auth::user();
+        $seller = $user->seller;
+        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
+        return view('seller.market.index', compact('user','seller', 'markets'));
     }
 
     /**
@@ -53,6 +54,8 @@ class MarketController extends Controller
     public function show(Market $market)
     {
         //
+        $products = Product::whereIn('market_id',$market->pluck('id'))->get();
+        return view('seller.market.show',compact('market','products'));
     }
 
     /**
@@ -66,9 +69,18 @@ class MarketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMarketRequest $request, Market $market)
+    public function update(Request $request, Market $market)
     {
         //
+        $market->update([
+            'name'    => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
+        //$request->market()->fill($request->validated());
+        //$request->market()->update();
+        //$request->market()->save();
+        $products = Product::whereIn('market_id',$market->pluck('id'))->get();
+        return view('seller.market.show',compact('market','products'));
     }
 
     /**
