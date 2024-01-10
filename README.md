@@ -1,66 +1,38 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 系統畫面
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 系統的主要功能與負責的同學
+★ 商品
+- Route::get('/', [ProductController::class, 'index'])->name('products.index'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::post('/product/store', [ProductController::class, 'store'])->name('product.store'); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::post('/product/gift-order', [ProductController::class, 'giftOrder'])->name('products.gift-order'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::get('/product/{product}/gift-order', [ProductController::class, 'showGiftOrderPage'])->name('products.show-gift-order'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product'); [3B032106 李宣佑](https://github.com/3B032106)
 
-## About Laravel
+★ 購物車
+- Route::get('/cart', [CartController::class, 'index'])->name('cart.index'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store'); [3B032112 陳泰恩](https://github.com/3B032112)
+- Route::delete('/cart/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy'); [3B032112 陳泰恩](https://github.com/3B032112)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+★ 訂單
+- Route::get('/order', [OrderController::class, 'index'])->name('order.index'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::post('/order', [OrderController::class, 'store'])->name('order.store'); [3B032106 李宣佑](https://github.com/3B032106)
+- Route::put('/order/{order}/update', [OrderController::class, 'update'])->name('order.update'); [3B032112 陳泰恩](https://github.com/3B032112)
+- Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy'); [3B032112 陳泰恩](https://github.com/3B032112)
+- Route::put('/pay/{order}', [OrderController::class, 'pay'])->name('order.pay'); [3B032112 陳泰恩](https://github.com/3B032112)
+- Route::get('/orderdetail/show/{order}', [OrderController::class, 'showOrderDetail'])->name('order.detail.show'); [3B032112 陳泰恩](https://github.com/3B032112)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+★ 會員
+- Route::put('/update-profile', [MemberController::class, 'update'])->name('update-profile'); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::post('/friend', [MembersFriendController::class, 'store'])->name('friend.store'); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::resource('friend', MembersFriendController::class)->except(['create', 'store']); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store'); [3B032112 陳泰恩](https://github.com/3B032112)
+- Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard'); [3B032106 李宣佑](https://github.com/3B032106)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+★ 賣家
+- Route::get('/seller/index', [SellerController::class, 'store'])->name('seller.store'); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::resource('seller', SellerController::class)->except(['store', 'create']); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::resource('seller.market', MarketController::class)->except(['show', 'create', 'update']); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::post('/seller/marker/index', [MarketController::class, 'store'])->name('seller.market.store'); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::get('/seller/market/{market}', [MarketController::class, 'show'])->name('seller.market.show'); [3B032123 顏妤年](https://github.com/3B032123)
+- Route::post('/seller/market/{market}', [MarketController::class, 'update'])->name('seller.market.update'); [3B032112 陳泰恩](https://github.com/3B032112)
