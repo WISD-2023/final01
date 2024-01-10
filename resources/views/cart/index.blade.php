@@ -6,7 +6,7 @@
 <div class="container mx-auto py-8">
     <h1 class="text-3xl font-semibold mb-4">購物車</h1>
 
-    <form method="post" action="{{ route('order.store') }}" id="purchaseForm">
+    < method="post" action="{{ route('order.store') }}" id="purchaseForm">
         @csrf
 
         <div class="grid grid-cols-2 gap-4">
@@ -14,11 +14,11 @@
             <div class="col-span-1">
                 @forelse($cartItems as $cartItem)
                 <div class="mb-4 p-4 border rounded-lg flex items-center">
-                    <!-- 加入購物車按鈕 -->
+                    <!-- 選取購物車品項按鈕 -->
                     <label for="buy{{ $loop->iteration }}" class="mr-4">
-                        <input type="checkbox" name="buy[]" id="buy{{ $loop->iteration }}" class="mr-1" value="{{ $cartItem->product->id }}"> 加到訂單
+                        <input type="checkbox" name="buy[]" id="buy{{ $loop->iteration }}" class="mr-1" value="{{ $cartItem->product->id }}">
                     </label>
-                    <button type="button" class="text-red-500 text-sm">刪除</button>
+
                     <!-- 商品照片區域 -->
                     <div class="flex-shrink-0">
                         <img src="{{ $cartItem->product->pic }}" alt="{{ $cartItem->product->name }}" class="w-32 h-40 object-cover rounded-md">
@@ -77,8 +77,9 @@
 
                 <!-- 購買按鈕 -->
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded border border-green-500 hover:bg-white hover:text-green-500">購買</button>
+                <button type="button" class="bg-red-500 text-white px-4 py-2 rounded border border-red-500 hover:bg-white hover:text-red-500">移除</button>
             </div>
         </div>
-    </form>
+        </form>
 </div>
 @endsection
