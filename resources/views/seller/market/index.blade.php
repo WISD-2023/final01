@@ -39,7 +39,7 @@
             @empty
                 <p>你尚未建立賣場。</p>
                 <div class="mt-4 flex items-center justify-end gap-x-4">
-                    <form action="{{ route('seller.market.store') }}" method="POST"> <!-- 修改這裡使用 POST 方法 -->
+                    <form action="{{ route('seller.market.store') }}" method="POST">
                         @csrf
                         <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">建立賣場</button>
                     </form>
@@ -48,12 +48,10 @@
 
             <!-- Add a button for creating a market -->
             <div class="mt-4 flex items-center justify-end gap-x-4">
-                <!-- 修改這裡使用 POST 方法 -->
                 <form action="{{ route('seller.market.store') }}" method="POST">
                     @csrf
                     <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">建立賣場</button>
                 </form>
-
             </div>
 
         </div>

@@ -34,6 +34,7 @@ Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+Route::delete('/cart/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
@@ -80,4 +81,4 @@ Route::middleware('auth')->group(function () {
 });
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

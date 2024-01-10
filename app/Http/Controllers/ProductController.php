@@ -20,15 +20,20 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        if($request ==""){
         // 獲取所有商品資料，每頁顯示12個
         $products = Product::paginate(12);
 
         // 將商品資料傳遞到視圖中
-        return view('products.index', compact('products'));
-        
+        return view('products.index', compact('products'));}
+        else{
+            $search = $request->input('search');
+        $products = Product::where('name', 'like', "%$search%")->paginate(12);
+
+        return view('products.index', compact('products'))->with('search', $search);}
     }
 
     /**
@@ -55,10 +60,10 @@ class ProductController extends Controller
         try {
             // 獲取單一商品的詳細資訊
             $productDetails = Product::findOrFail($product->id);
-    
+
             // 獲取與商品相關的訂單資訊
             $orderDetails = $productDetails->order; // 這裡假設有一個 order 的關聯，你需要根據你的實際情況調整
-    
+
             // 將單一商品的詳細資訊和相關的訂單資訊傳遞到視圖中
             return view('products.product', compact('productDetails', 'orderDetails'));
         } catch (ModelNotFoundException $e) {
@@ -94,7 +99,7 @@ class ProductController extends Controller
     {
         // 獲取表單中傳遞的商品 ID
         $productId = $request->input('product_id');
-    
+
         // 使用商品 ID 查找相應的商品
         $product = Product::findOrFail($productId);
 
@@ -143,29 +148,29 @@ class ProductController extends Controller
             'quantity' => 1, // 假設每個訂單明細只包含一個商品，根據實際情況調整
         ]);
         */
-    
+
         // 將商品和訂單資料傳遞到視圖中
         return redirect()->route('order.index')->with('success', '成功送禮！');
     }
-    
+
     public function showGiftOrderPage(Request $request, Product $product)
     {
         // 獲取表單中傳遞的商品 ID
         $productId = $product->id;
-    
+
         // 這裡根據你的模型邏輯獲取商品詳細資訊
         $productDetails = Product::findOrFail($productId);
-    
+
         // 取得當前使用者的 ID
         $userId = Auth::id();
-    
+
         // 使用當前使用者的 ID 篩選好友資料
         $friends = MembersFriend::where('user_id', $userId)->get();
-    
+
         $friendIds = $friends->pluck('friend_id');
         $friendsList = User::whereIn('id', $friendIds)->get();
-    
+
         return view('products.gift-order', compact('productDetails', 'friendsList'));
     }
-     
+
 }
