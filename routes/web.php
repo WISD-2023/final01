@@ -31,6 +31,10 @@ Route::get('/', function () {
 */
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
+Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+Route::post('/product/gift-order', [ProductController::class, 'giftOrder'])->name('products.gift-order');
+Route::get('/product/{product}/gift-order', [ProductController::class, 'showGiftOrderPage'])->name('products.show-gift-order');
+Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
@@ -38,7 +42,6 @@ Route::delete('/cart/{cartItem}', [CartController::class, 'destroy'])->name('car
 
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
-
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::put('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
 Route::delete('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
@@ -56,11 +59,6 @@ Route::middleware(['web', 'auth'])->group(function () {
 
 //Route::delete('/friend/{friend}', [MembersFriendController::class, 'destroy'])->name('friend.destroy');
 
-Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
-
-Route::post('/product/gift-order', [ProductController::class, 'giftOrder'])->name('products.gift-order');
-Route::get('/product/{product}/gift-order', [ProductController::class, 'showGiftOrderPage'])->name('products.show-gift-order');
-Route::get('/product/{product}', [ProductController::class, 'show'])->name('products.product');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -68,7 +66,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/seller/index', [SellerController::class, 'store'])->name('seller.store');
 Route::resource('seller', SellerController::class)->except(['store', 'create']);
-
 Route::resource('seller.market', MarketController::class)->except(['show', 'create', 'update']);
 Route::post('/seller/marker/index', [MarketController::class, 'store'])->name('seller.market.store');
 Route::get('/seller/market/{market}', [MarketController::class, 'show'])->name('seller.market.show');
