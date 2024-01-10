@@ -54,7 +54,9 @@ class CartController extends Controller
 
         // 檢查購物車是否已存在相同商品，如果存在則增加數量，否則新增購物車項目
         $existingCartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
-
+        if (Auth::guest()) {
+            return redirect()->route('login')->with('warning', '請先登入');
+        }
         if ($existingCartItem) {
             $existingCartItem->update([
                 'quantity' => $existingCartItem->quantity + 1,
