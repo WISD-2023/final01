@@ -23,7 +23,7 @@ class OrderController extends Controller
         // 獲取當前使用者的所有訂單
         $userId = auth()->id();
         $orders = Order::where('user_id', $userId)->get();
-    
+
         // 傳遞訂單數據到訂單頁面
         return view('order.order', compact('orders'));
     }
@@ -44,10 +44,10 @@ class OrderController extends Controller
         try {
             // 開啟資料庫交易
             DB::beginTransaction();
-    
+
             // 獲取目前使用者的購物車ID和ID
             $userId = auth()->id();
-    
+
             // 創建一筆訂單
             $order = new Order();
             $order->status = "審核中";
@@ -57,15 +57,18 @@ class OrderController extends Controller
             $order->user_id = $userId; // 將購物車ID存入訂單
             // 其他收貨人資訊的處理，根據實際情況添加
             $order->save();
-    
+
             // 獲取被勾選的商品ID陣列
             $selectedProducts = $request->input('buy', []);
             $quantities = $request->input('quantity', []);
-    
+
+            if (empty($selectedProducts) || $quantities == 0) {
+                return back()->with('error', '請選擇要購買的商品');
+            }
             // 將選定的商品建立到訂單明細
             foreach ($selectedProducts as $key => $productId) {
                 $quantity = $quantities[$key] ?? 1; // 使用索引對應取得商品數量
-    
+
                 // 在 order_details 資料表中新增訂單明細
                 $orderDetail = new OrderDetail();
                 $orderDetail->order_id = $order->id;
@@ -74,22 +77,22 @@ class OrderController extends Controller
                 // 其他訂單明細資訊的處理，根據實際情況添加
                 $orderDetail->save();
             }
-    
+
             // 清空購物車中屬於被勾選商品的項目
             Cart::where('user_id', $userId)
-            ->whereIn('product_id', $selectedProducts)
-            ->delete();
-    
+                ->whereIn('product_id', $selectedProducts)
+                ->delete();
+
             // 提交資料庫交易
             DB::commit();
-    
+
             // 其他相關邏輯，例如發送確認郵件等...
-    
+
             return redirect()->route('order.index')->with('success', '訂單已成功建立');
         } catch (\Exception $e) {
             // 如果有任何錯誤發生，回滾資料庫交易
             DB::rollBack();
-            
+
             // 處理錯誤，你可以根據實際情況進行適當的處理
             dd($e);
             return back()->with('error', '訂單建立失敗：' . $e->getMessage());
@@ -103,34 +106,34 @@ class OrderController extends Controller
     {
         // 取得此訂單的所有商品ID和數量
         $orderDetails = $order->orderDetails;
-    
+
         // 取得商品資料
         $products = Product::whereIn('id', $orderDetails->pluck('product_id')->toArray())->get();
-    
+
         // 取得當前使用者的所有朋友姓名
         $userId = auth()->id();
         $friendIds = MembersFriend::where('user_id', $userId)->pluck('friend_id');
         $friends = User::whereIn('id', $friendIds)->get();
-    
+
         // 傳遞商品資料、訂單資料、訂單明細和朋友到視圖
         return view('order.order-edit', compact('order', 'products', 'orderDetails', 'friends'));
-    }    
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        
+
         \Log::info('Update Order Request Data:', $request->all());
         // 檢查訂單是否存在
         //if (!$order) {
-            //return response()->json(['error' => '訂單不存在'], 404);
+        //return response()->json(['error' => '訂單不存在'], 404);
         //}
-    
+
         // 開啟資料庫交易
         DB::beginTransaction();
-    
+
         try {
             // 更新訂單資訊
             /*
@@ -145,12 +148,12 @@ class OrderController extends Controller
             //$order->is_paid = $request->input('isPaid');
             $order->receiver_name = $request->input('receiverName');
             $order->save();
-    
+
             // 更新訂單明細中的商品數量
             foreach ($order->orderDetails as $orderDetail) {
                 $productId = $orderDetail->product_id;
                 $quantity = $request->input("quantity.$productId", 1); // 如果沒有該商品的新數量，預設為 1
-    
+
                 /*
                 $orderDetail->update([
                     'quantity' => $quantity,
@@ -160,7 +163,7 @@ class OrderController extends Controller
                 $orderDetail->quantity = $quantity;
                 $orderDetail->save();
             }
-    
+
             // 提交資料庫交易
             DB::commit();
 
@@ -168,7 +171,7 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             // 如果有任何錯誤發生，回滾資料庫交易
             DB::rollBack();
-    
+
             // 處理錯誤，你可以根據實際情況進行適當的處理
             return back()->with('error', '訂單修改失敗：' . $e->getMessage());
         }
@@ -200,13 +203,13 @@ class OrderController extends Controller
     {
         // 取得此訂單的所有商品明細
         $orderDetails = $order->orderDetails;
-    
+
         // 取得當前使用者的所有朋友姓名
         $userId = auth()->id();
         $friendIds = MembersFriend::where('user_id', $userId)->pluck('friend_id');
         $friends = User::whereIn('id', $friendIds)->get();
-    
+
         // 傳遞訂單數據、商品明細和朋友到訂單明細頁面
         return view('order.orderdetail', ['order' => $order, 'orderDetails' => $orderDetails, 'friends' => $friends]);
-    }    
+    }
 }
