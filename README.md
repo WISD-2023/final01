@@ -68,7 +68,7 @@ artisan db:seed
 
 ## 使用者測試帳號
 - 帳號: `user@localhos`
-- 密碼: `password01`
+- 密碼: `password`
 
 ## 系統復原步驟
 1. 複製 ``git@github.com:WISD-2023/final01.git`` (或是[https://github.com/WISD-2023/final01.git](https://github.com/WISD-2023/final01))
