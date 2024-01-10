@@ -1,4 +1,75 @@
 # 系統畫面
+★ 訪客 首頁
+
+購物網站首頁及登入按鈕
+![image](https://github.com/WISD-2023/final01/assets/145514645/1e3522fd-18aa-4944-b7e1-fef43d1fb112)
+
+★ 會員 首頁
+
+購物網站首頁 購物車及訂單狀態等會員功能 
+![image](https://github.com/WISD-2023/final01/assets/145514645/9223de48-e61b-4471-aba0-639b3c96696a)
+
+購物網站首頁 點選會員姓名可有更多會員功能
+![image](https://github.com/WISD-2023/final01/assets/145514645/3b046865-9197-4f63-af16-91b9a920f970)
+
+★ 訪客/會員 首頁
+
+搜尋商品
+![image](https://github.com/WISD-2023/final01/assets/145514645/7ee1063e-f7db-4008-a681-4a0f68b43a33)
+![image](https://github.com/WISD-2023/final01/assets/145514645/bcfc5dfa-6116-4734-af45-ae792f5297be)
+
+★ 訪客 查看商品資訊
+
+包含名稱、商品說明、商品狀態、價格、評論及加入購物車，登入後才可評論
+![image](https://github.com/WISD-2023/final01/assets/145514645/2f374e8a-376f-479e-a28a-bebee4b77e2f)
+![image](https://github.com/WISD-2023/final01/assets/145514645/9c846ce6-cd44-4739-9e78-43dddc083f8d)
+
+★ 會員 查看商品資訊
+
+包含名稱、商品說明、商品狀態、價格、評論及加入購物車，會員可發表評論及進行好友贈送
+![image](https://github.com/WISD-2023/final01/assets/145514645/bfb13879-7df3-459f-a483-ea165fb0a1b7)
+![image](https://github.com/WISD-2023/final01/assets/145514645/4caa2c80-9cec-4782-94ff-4f3aa7cb9cbf)
+
+★ 會員 購物車
+
+購物車內容及結帳資訊進行購買
+![image](https://github.com/WISD-2023/final01/assets/145514645/862ccb37-7e19-4f34-b0a3-bbbfc906e039)
+
+★ 會員 訂單狀態
+
+顯示目前訂單 可查看明細及付款
+![image](https://github.com/WISD-2023/final01/assets/145514645/f2ae9994-a608-49b0-bcfc-c998e9a2bb9b)
+
+★ 會員 訂單明細
+
+顯示明細 可修改及刪除此筆訂單
+![image](https://github.com/WISD-2023/final01/assets/145514645/dae2c3b8-a9bb-41a3-84e1-577486530343)
+
+★ 會員 個人資訊
+
+顯示個人資訊 可修改個人資訊及變更密碼
+![image](https://github.com/WISD-2023/final01/assets/145514645/c81fff92-1dca-4da4-8be8-5eeb69a6e883)
+![image](https://github.com/WISD-2023/final01/assets/145514645/2bc602fb-6211-4ee9-9d69-e16775782b51)
+
+★ 會員 好友
+
+顯示好友 可加入好友及解除好友關係
+![image](https://github.com/WISD-2023/final01/assets/145514645/0dfac207-46af-447d-a464-ec659d2680f7)
+
+★ 會員不是賣家 賣家
+
+可申請成為賣家
+![image](https://github.com/WISD-2023/final01/assets/145514645/6239bd2d-ed79-48ea-b20f-3035f2dd81ba)
+
+★ 會員已是賣家 賣家
+
+顯示自己所有的賣場 可進入賣場及建立新賣場
+![image](https://github.com/WISD-2023/final01/assets/145514645/16dae799-418a-4d90-abc6-ef2f93f4bbfe)
+
+★ 賣家 賣場管理
+
+顯示賣場內的商品 可修改賣場資訊
+![image](https://github.com/WISD-2023/final01/assets/145514645/267ba03e-c420-4a8d-a6e0-a64e2d5ad0fa)
 
 # 系統的主要功能與負責的同學
 ★ 商品
