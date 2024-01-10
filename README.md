@@ -84,7 +84,7 @@ artisan db:seed
    - `DB_CONNECTION=mysql`
    - `DB_HOST=127.0.0.1`
    - `DB_PORT=33060`
-   - `DB_DATABASE=final03`
+   - `DB_DATABASE=final01`
    - `DB_USERNAME=root`
    - `DB_PASSWORD=root`
 4. 復原DB/建立資料庫
