@@ -69,7 +69,7 @@ Route::get('/seller/index', [SellerController::class, 'store'])->name('seller.st
 Route::resource('seller', SellerController::class)->except(['store', 'create']);
 
 Route::resource('seller.market', MarketController::class)->except(['show', 'create', 'update']);
-Route::get('/seller/market/index', [MarketController::class, 'store'])->name('seller.market.store');
+Route::post('/seller/marker/index', [MarketController::class, 'store'])->name('seller.market.store');
 Route::get('/seller/market/{market}', [MarketController::class, 'show'])->name('seller.market.show');
 Route::post('/seller/market/{market}', [MarketController::class, 'update'])->name('seller.market.update');
 /*

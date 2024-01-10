@@ -45,7 +45,7 @@ class SellerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMarketRequest $request)
+    public function store(StoreSellerRequest $request)
     {
         $user = Auth::user();
         $seller = $user->seller;

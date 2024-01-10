@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '社交購物商場')
+@section('title', '社交購物商場 - 賣場管理')
 
 @section('content')
     <div class="container mx-auto py-8">

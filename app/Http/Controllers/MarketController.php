@@ -37,18 +37,35 @@ class MarketController extends Controller
      */
     public function store(StoreMarketRequest $request)
     {
-        //
-        $user = Auth::user();
-        $seller = $user->seller;
-        Market::create([
-            'seller_id' => $seller->id,
-            'name' => "你的賣場",
-            'description' => "賣場描述",
-        ]);
-        $markets = Market::whereIn('seller_id',$seller->pluck('id'))->get();
-        return view('seller.market.index',compact('seller','markets'));
-    }
-
+        // 檢查使用者是否已經登錄
+        if (Auth::check()) {
+            $user = Auth::user();
+            // 檢查使用者是否有賣家資訊
+            if ($user->seller) {
+                $seller = $user->seller;
+    
+                // 檢查是否已經存在賣場，避免重複建立
+                if (!$seller->market) {
+                    Market::create([
+                        'seller_id' => $seller->id,
+                        'name' => "你的賣場",
+                        'description' => "賣場描述",
+                    ]);
+    
+                    $markets = Market::whereIn('seller_id', $seller->pluck('id'))->get();
+                    return view('seller.market.index', compact('seller', 'markets'));
+                } else {
+                    // 如果已經存在賣場，可以在這裡做相應的處理
+                    return view('seller.market.index', compact('seller'));
+                }
+            }
+            // 如果使用者沒有賣家資訊的處理邏輯
+            return redirect()->route('home')->with('error', '您不是賣家，無法建立賣場。');
+        }
+        // 如果使用者未登錄的處理邏輯
+        return redirect()->route('login')->with('error', '請先登錄以建立賣場。');
+    }    
+    
     /**
      * Display the specified resource.
      */
