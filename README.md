@@ -91,3 +91,11 @@ artisan db:seed
    - `artisan migrate`
 5. 建立模擬資料
    - `artisan db:seed`
+
+## 系統開發人員與工作分配
+- [3B032106 李宣佑](https://github.com/3B032106)
+  
+- [3B032112 陳泰恩](https://github.com/3B032112)
+  
+- [3B032123 顏妤年](https://github.com/3B032123)
+  
