@@ -113,10 +113,41 @@
 ★ Model 關聯 [3B032106 李宣佑](https://github.com/3B032106)
 
 ## ERD
+![image](https://github.com/WISD-2023/final01/assets/145514645/f72cc342-5f4b-4837-ba98-1286da8d6cac)
 
 ## 關聯式綱要圖
+![image](https://github.com/WISD-2023/final01/assets/145514645/a027cb8e-db6e-466e-a541-884aac2f3597)
 
 ## 實際資料表欄位設計
+
+★ 會員
+![image](https://github.com/WISD-2023/final01/assets/145514645/e1df1cf8-18b7-446a-b140-1d5535326173)
+
+★ 購物車
+![image](https://github.com/WISD-2023/final01/assets/145514645/7abb1cdd-7fd5-4e5f-8aad-6c7ad50a67bf)
+
+★ 評論
+![image](https://github.com/WISD-2023/final01/assets/145514645/981cf628-7849-40f1-8687-aa0a0d42ff08)
+
+★ 訂單
+
+![image](https://github.com/WISD-2023/final01/assets/145514645/e5792198-6b49-4dde-acaf-6ac82e9e83a7)
+
+★ 商品
+![image](https://github.com/WISD-2023/final01/assets/145514645/b1babfe8-fb6c-4a7a-8d9d-0ebb2e88ad9b)
+
+★ 商品種類
+![image](https://github.com/WISD-2023/final01/assets/145514645/fc9258cf-530a-4811-9498-8835a3302be9)
+
+★ 商場
+
+![image](https://github.com/WISD-2023/final01/assets/145514645/729f35f2-5589-48bb-ab36-b94abbd72ef3)
+
+★ 會員好友
+![image](https://github.com/WISD-2023/final01/assets/145514645/b1a3710e-9a9b-4758-aa59-15de7b2b28b0)
+
+★ 賣家
+![image](https://github.com/WISD-2023/final01/assets/145514645/2c1e6e71-db29-4e12-b06c-fddad1caa4d4)
 
 ## 初始專案與負責資料庫的同學
 - 初始專案 [3B032106 李宣佑](https://github.com/3B032106)
