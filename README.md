@@ -9,6 +9,8 @@
 購物網站首頁 購物車及訂單狀態等會員功能 
 ![image](https://github.com/WISD-2023/final01/assets/145514645/9223de48-e61b-4471-aba0-639b3c96696a)
 
+★ 會員 首頁
+
 購物網站首頁 點選會員姓名可有更多會員功能
 ![image](https://github.com/WISD-2023/final01/assets/145514645/3b046865-9197-4f63-af16-91b9a920f970)
 
@@ -116,11 +118,12 @@
 ![image](https://github.com/WISD-2023/final01/assets/145514645/f72cc342-5f4b-4837-ba98-1286da8d6cac)
 
 ## 關聯式綱要圖
-![image](https://github.com/WISD-2023/final01/assets/145514645/a027cb8e-db6e-466e-a541-884aac2f3597)
+![image](https://github.com/WISD-2023/final01/assets/145514645/aef379c9-88ff-401d-8906-b2da2f962364)
 
 ## 實際資料表欄位設計
 
 ★ 會員
+
 ![image](https://github.com/WISD-2023/final01/assets/145514645/e1df1cf8-18b7-446a-b140-1d5535326173)
 
 ★ 購物車
@@ -132,6 +135,9 @@
 ★ 訂單
 
 ![image](https://github.com/WISD-2023/final01/assets/145514645/e5792198-6b49-4dde-acaf-6ac82e9e83a7)
+
+★ 訂單明細
+![image](https://github.com/WISD-2023/final01/assets/145514645/1d21c95a-a2d1-4fe8-9145-e361140a5e87)
 
 ★ 商品
 ![image](https://github.com/WISD-2023/final01/assets/145514645/b1babfe8-fb6c-4a7a-8d9d-0ebb2e88ad9b)
