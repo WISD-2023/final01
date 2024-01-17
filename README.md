@@ -115,10 +115,11 @@
 ★ Model 關聯 [3B032106 李宣佑](https://github.com/3B032106)
 
 ## ERD
-![image](https://github.com/WISD-2023/final01/assets/145514645/f72cc342-5f4b-4837-ba98-1286da8d6cac)
+![image](https://github.com/WISD-2023/final01/assets/148925858/73cea3da-6f20-4514-93a4-d7a6b405a80d)
 
 ## 關聯式綱要圖
-![image](https://github.com/WISD-2023/final01/assets/145514645/aef379c9-88ff-401d-8906-b2da2f962364)
+![image](https://github.com/WISD-2023/final01/assets/148925858/a372904c-7e27-45eb-b1ed-65efda629ae2)
+
 
 ## 實際資料表欄位設計
 
